@@ -1,48 +1,65 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { styles } from "../styles";
 
-const ImageSlider = ({ beforeImage, afterImage, alt = "Image comparison" }) => {
-  const [sliderPosition, setSliderPosition] = useState(100); // 100% means showing only "before" image
+const ImageSlider = ({
+  beforeImage,
+  afterImage,
+  alt = "Image comparison",
+  size = 100, // Default to 100% width of parent container
+}) => {
+  const [sliderPosition, setSliderPosition] = useState(50); // Start at 50% to show half of each
+  const [imageRatio, setImageRatio] = useState(1); // Default 1:1 ratio
   const sliderContainerRef = useRef(null);
+
+  // Preload images to get their natural dimensions
+  useEffect(() => {
+    const preloadImages = () => {
+      const beforeImg = new Image();
+      beforeImg.src = beforeImage;
+
+      beforeImg.onload = () => {
+        // Calculate aspect ratio from the actual image
+        const ratio = beforeImg.naturalHeight / beforeImg.naturalWidth;
+        setImageRatio(ratio);
+      };
+    };
+
+    preloadImages();
+  }, [beforeImage]);
 
   const handleSliderChange = (e) => {
     setSliderPosition(e.target.value);
   };
 
-  // Calculate the width of the "after" image based on slider position
-  const afterImageStyle = {
-    width: `${sliderPosition}%`,
+  // Calculate container styles based on the size prop
+  const containerStyles = {
+    ...styles.sliderContainer,
+    position: "relative",
+    width: `${size}%`, // Use size prop to control width
+    maxWidth: size < 100 ? "none" : "800px", // Only apply max-width if size is 100%
+    margin: "0 auto",
   };
 
   return (
-    <div
-      style={{
-        ...styles.sliderContainer,
-        position: "relative",
-        overflow: "hidden",
-        width: "100%",
-        maxWidth: "800px",
-        margin: "0 auto",
-      }}
-    >
+    <div style={containerStyles}>
       {/* Container for both images */}
       <div
         ref={sliderContainerRef}
         style={{
           position: "relative",
           width: "100%",
-          aspectRatio: "16/9", // maintain a consistent aspect ratio
+          paddingBottom: `${imageRatio * 100}%`, // Dynamic padding based on image ratio
+          backgroundColor: "#222",
         }}
       >
-        {/* After image (visible based on slider) */}
+        {/* After image (edited car) - base layer */}
         <div
           style={{
             position: "absolute",
             top: 0,
             left: 0,
-            height: "100%",
-            width: "100%",
-            overflow: "hidden",
+            right: 0,
+            bottom: 0,
             zIndex: 1,
           }}
         >
@@ -52,30 +69,32 @@ const ImageSlider = ({ beforeImage, afterImage, alt = "Image comparison" }) => {
             style={{
               width: "100%",
               height: "100%",
-              objectFit: "cover",
+              objectFit: "contain", // Show full image without cropping
+              backgroundColor: "#222",
             }}
           />
         </div>
 
-        {/* Before image with dynamic width */}
+        {/* Before image (original car) with reveal mask */}
         <div
           style={{
             position: "absolute",
             top: 0,
             left: 0,
-            height: "100%",
-            ...afterImageStyle,
-            overflow: "hidden",
+            right: 0,
+            bottom: 0,
             zIndex: 2,
+            clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`, // Clip from right side based on slider
           }}
         >
           <img
             src={beforeImage}
             alt={`${alt} (before)`}
             style={{
-              width: `${100 / (sliderPosition / 100)}%`, // Scale the image based on visible portion
+              width: "100%",
               height: "100%",
-              objectFit: "cover",
+              objectFit: "contain", // Show full image without cropping
+              backgroundColor: "#222",
             }}
           />
         </div>
@@ -94,19 +113,21 @@ const ImageSlider = ({ beforeImage, afterImage, alt = "Image comparison" }) => {
         />
       </div>
 
-      {/* Slider control */}
-      <input
-        type="range"
-        min="0"
-        max="100"
-        value={sliderPosition}
-        onChange={handleSliderChange}
-        style={{
-          width: "100%",
-          margin: "20px 0",
-          accentColor: "#fc0800",
-        }}
-      />
+      {/* Slider controls */}
+      <div style={{ width: "100%", padding: "10px 0" }}>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value={sliderPosition}
+          onChange={handleSliderChange}
+          style={{
+            width: "100%",
+            margin: "10px 0",
+            accentColor: "#fc0800",
+          }}
+        />
+      </div>
     </div>
   );
 };
