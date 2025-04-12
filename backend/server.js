@@ -6,6 +6,7 @@ const cors = require("cors");
 // Import routes
 const generateImageRoute = require("./routes/generateImage");
 const editImageRoute = require("./routes/editImage");
+const creationsRoute = require("./routes/creations");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(express.json());
 // Register routes
 app.use("/generate-image", generateImageRoute);
 app.use("/edit-image", editImageRoute);
+app.use("/creations", creationsRoute);
 
 const PORT = 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

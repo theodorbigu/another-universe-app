@@ -1,11 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
 import { styles } from "../styles";
+import { saveCreation } from "../services/api";
 
 function ImageGeneration() {
   const [prompt, setPrompt] = useState("");
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
   const generateImage = async () => {
     // Validation
@@ -16,6 +19,7 @@ function ImageGeneration() {
 
     setLoading(true);
     setImageUrl(null);
+    setSaveSuccess(false);
 
     try {
       // Send request to generate-image endpoint using JSON
@@ -43,6 +47,31 @@ function ImageGeneration() {
     }
 
     setLoading(false);
+  };
+
+  const handleSaveCreation = async () => {
+    if (!imageUrl || !prompt) {
+      alert("Both image and prompt are required to save to gallery.");
+      return;
+    }
+
+    setSaving(true);
+    setSaveSuccess(false);
+
+    try {
+      await saveCreation(prompt, imageUrl);
+      setSaveSuccess(true);
+      alert("Creation saved to gallery successfully!");
+    } catch (error) {
+      console.error("Failed to save creation:", error);
+      alert(
+        `Failed to save to gallery: ${
+          error.response?.data?.error || error.message
+        }`
+      );
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -93,6 +122,25 @@ function ImageGeneration() {
             alt="AI Generated Result"
             style={styles.resultImage}
           />
+
+          {/* Save to Gallery Button */}
+          <button
+            style={{
+              ...styles.button,
+              ...styles.buttonSecondary,
+              ...(saving ? styles.buttonDisabled : {}),
+              ...(saveSuccess ? styles.buttonSuccess : {}),
+              marginTop: "16px",
+            }}
+            onClick={handleSaveCreation}
+            disabled={saving}
+          >
+            {saving
+              ? "Saving..."
+              : saveSuccess
+              ? "Saved to Gallery!"
+              : "Save to Gallery"}
+          </button>
         </div>
       )}
     </div>

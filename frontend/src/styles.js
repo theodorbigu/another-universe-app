@@ -310,12 +310,13 @@ export const styles = {
     textAlign: "center",
   },
   loadingSpinner: {
+    border: "4px solid #333",
+    borderRadius: "50%",
+    borderTop: "4px solid #fc0800",
     width: "40px",
     height: "40px",
-    border: "4px solid rgba(252, 8, 0, 0.2)", // Transparent red
-    borderRadius: "50%",
-    borderTop: "4px solid #fc0800", // Red spinner
     animation: "spin 1s linear infinite",
+    marginBottom: "16px",
   },
   "@keyframes spin": {
     "0%": { transform: "rotate(0deg)" },
@@ -349,5 +350,76 @@ export const styles = {
     width: "240px",
     height: "240px",
     objectFit: "contain",
+  },
+  // Gallery styles
+  galleryGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))",
+    gap: "24px",
+    marginTop: "24px",
+  },
+  galleryItem: {
+    backgroundColor: "#222",
+    borderRadius: "8px",
+    overflow: "hidden",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease",
+    ":hover": {
+      transform: "translateY(-5px)",
+      boxShadow: "0 8px 12px rgba(0, 0, 0, 0.3)",
+    },
+  },
+  galleryImage: {
+    width: "100%",
+    aspectRatio: "1/1",
+    objectFit: "cover",
+    borderTopLeftRadius: "8px",
+    borderTopRightRadius: "8px",
+  },
+  galleryCaption: {
+    padding: "12px",
+  },
+  galleryPrompt: {
+    fontSize: "0.9rem",
+    marginBottom: "8px",
+    color: "#f5f5f5",
+    display: "-webkit-box",
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
+  galleryDate: {
+    fontSize: "0.8rem",
+    color: "#999",
+  },
+  // Pagination styles
+  paginationControls: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "32px",
+    gap: "16px",
+  },
+  paginationInfo: {
+    color: "#f5f5f5",
+    fontWeight: "500",
+  },
+  // Message container
+  messageContainer: {
+    textAlign: "center",
+    padding: "32px",
+    backgroundColor: "#222",
+    borderRadius: "8px",
+    margin: "32px 0",
+  },
+  // Success button state
+  buttonSuccess: {
+    backgroundColor: "#0fc95b", // Green for success
+    color: "white",
+  },
+  buttonSecondary: {
+    backgroundColor: "#0077cc", // Blue for secondary actions
+    color: "white",
   },
 };

@@ -44,6 +44,15 @@ function Navbar() {
         >
           Edit Images
         </Link>
+        <Link
+          to="/creations"
+          style={{
+            ...styles.navItem,
+            ...(isActive("/creations") ? styles.navItemActive : {}),
+          }}
+        >
+          Creations
+        </Link>
       </div>
     </div>
   );
