@@ -1,30 +1,32 @@
 export const styles = {
   container: {
-    backgroundColor: "#f0f5ff", // Light blue background for better contrast
+    backgroundColor: "#222", // Dark background
     minHeight: "100vh",
-    padding: "32px 20px",
+    padding: "0", // Remove padding
     fontFamily:
       "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-    color: "#333",
+    color: "#f5f5f5", // Lighter text for dark background
     lineHeight: 1.5,
   },
-  // New styles for layout with navbar
+  // Updated layout styles to take full screen
   appLayout: {
     display: "flex",
-    maxWidth: "1200px",
-    margin: "0 auto",
-    backgroundColor: "white",
-    borderRadius: "12px",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)",
+    width: "100%",
+    height: "100vh",
+    backgroundColor: "#222",
     overflow: "hidden",
   },
   navbar: {
     width: "250px",
-    backgroundColor: "#2563eb",
-    color: "white",
+    backgroundColor: "#111", // Darker shade of black for navbar
+    color: "#fff",
     padding: "24px 16px",
     display: "flex",
     flexDirection: "column",
+    height: "100vh", // Make navbar full height
+    position: "sticky", // Keep navbar in place
+    top: 0,
+    left: 0,
   },
   navbarTitle: {
     fontSize: "1.5rem",
@@ -32,7 +34,8 @@ export const styles = {
     marginBottom: "32px",
     textAlign: "center",
     padding: "0 0 16px 0",
-    borderBottom: "1px solid rgba(255,255,255,0.2)",
+    borderBottom: "1px solid rgba(255,255,255,0.1)",
+    color: "#fc0800", // Red color for the title
   },
   navList: {
     display: "flex",
@@ -42,36 +45,39 @@ export const styles = {
   navItem: {
     padding: "12px 16px",
     borderRadius: "8px",
-    color: "white",
+    color: "#f5f5f5", // Light grey text
     textDecoration: "none",
     fontWeight: "500",
     transition: "all 0.2s ease",
     display: "block",
   },
   navItemActive: {
-    backgroundColor: "rgba(255,255,255,0.2)",
+    backgroundColor: "rgba(252, 8, 0, 0.2)", // Transparent red for active item
     fontWeight: "600",
+    color: "#fc0800", // Red text for active item
   },
   mainContent: {
     flex: 1,
     padding: "32px",
-    minHeight: "calc(100vh - 64px)",
+    height: "100vh",
     overflowY: "auto",
+    backgroundColor: "#333", // Dark grey for main content
   },
   // Styles for page content
   pageContainer: {
     display: "flex",
     flexDirection: "column",
     gap: "24px",
-    maxWidth: "700px",
+    maxWidth: "800px",
     margin: "0 auto",
+    padding: "20px 0",
   },
   mainHeading: {
     fontSize: "3rem",
     fontWeight: "700",
     textAlign: "center",
     marginBottom: "24px",
-    color: "#2563eb", // Blue shade for heading
+    color: "#fc0800", // Red for headings
     paddingBottom: "16px",
   },
   subHeading: {
@@ -79,8 +85,8 @@ export const styles = {
     fontWeight: "700",
     textAlign: "center",
     marginBottom: "24px",
-    color: "#2563eb", // Blue shade for heading
-    borderBottom: "2px solid #e5e7eb",
+    color: "#fc0800", // Red for headings
+    borderBottom: "2px solid #444", // Darker border
     paddingBottom: "16px",
   },
   vstack: {
@@ -89,26 +95,27 @@ export const styles = {
     gap: "24px",
     maxWidth: "700px",
     margin: "0 auto",
-    backgroundColor: "white",
+    backgroundColor: "#222", // Dark background
     padding: "32px",
     borderRadius: "12px",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.3)", // Darker shadow
   },
   heading: {
     fontSize: "2rem",
     fontWeight: "700",
     textAlign: "center",
     marginBottom: "24px",
-    color: "#2563eb", // Blue shade for heading
-    borderBottom: "2px solid #e5e7eb",
+    color: "#fc0800", // Red for headings
+    borderBottom: "2px solid #444", // Darker border
     paddingBottom: "16px",
   },
   input: {
     padding: "12px 16px",
     fontSize: "1rem",
-    border: "1px solid #d1d5db",
+    border: "1px solid #555",
     borderRadius: "6px",
-    backgroundColor: "white",
+    backgroundColor: "#444", // Dark input background
+    color: "#f5f5f5", // Light text
     width: "100%",
     transition: "border-color 0.2s ease",
   },
@@ -125,14 +132,14 @@ export const styles = {
     justifyContent: "center",
   },
   buttonPrimary: {
-    backgroundColor: "#2563eb", // Blue
+    backgroundColor: "#fc0800", // Red button
     color: "white",
-    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.3)",
   },
   buttonOutline: {
-    border: "1px solid #2563eb",
-    color: "#2563eb",
-    backgroundColor: "white",
+    border: "1px solid #fc0800", // Red border
+    color: "#fc0800", // Red text
+    backgroundColor: "transparent",
   },
   buttonDisabled: {
     opacity: 0.6,
@@ -145,45 +152,47 @@ export const styles = {
     display: "block",
     marginBottom: "8px",
     fontWeight: "600",
-    color: "#4b5563",
+    color: "#f5f5f5", // Light text
   },
   textarea: {
     width: "100%",
     padding: "12px 16px",
     fontSize: "1rem",
-    border: "1px solid #d1d5db",
+    border: "1px solid #555",
     borderRadius: "6px",
     minHeight: "100px",
     resize: "vertical",
     fontFamily: "inherit",
+    backgroundColor: "#444", // Dark textarea background
+    color: "#f5f5f5", // Light text
   },
   fileUpload: {
-    border: "2px dashed #d1d5db",
+    border: "2px dashed #555",
     borderRadius: "8px",
     padding: "24px",
     textAlign: "center",
-    color: "#6b7280",
+    color: "#f5f5f5", // Light text
     cursor: "pointer",
     transition: "all 0.2s ease",
-    backgroundColor: "#f9fafb",
+    backgroundColor: "#2a2a2a", // Dark upload area
   },
   fileUploadHover: {
-    borderColor: "#93c5fd",
-    backgroundColor: "#f0f7ff",
-    color: "#2563eb",
+    borderColor: "#fc0800", // Red border on hover
+    backgroundColor: "rgba(252, 8, 0, 0.1)", // Transparent red
+    color: "#fc0800", // Red text
   },
   previewArea: {
-    border: "1px solid #e5e7eb",
+    border: "1px solid #555",
     borderRadius: "8px",
     padding: "16px",
-    backgroundColor: "white",
+    backgroundColor: "#2a2a2a", // Dark preview area
     marginTop: "16px",
   },
   previewTitle: {
     fontSize: "1.1rem",
     fontWeight: "600",
     marginBottom: "12px",
-    color: "#374151",
+    color: "#f5f5f5", // Light text
   },
   previewWrap: {
     display: "flex",
@@ -192,7 +201,7 @@ export const styles = {
   },
   previewItem: {
     position: "relative",
-    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.3)",
     borderRadius: "8px",
     overflow: "hidden",
   },
@@ -201,13 +210,13 @@ export const styles = {
     height: "120px",
     objectFit: "cover",
     borderRadius: "6px",
-    border: "1px solid #e5e7eb",
+    border: "1px solid #444", // Darker border
   },
   removeButton: {
     position: "absolute",
     top: "-8px",
     right: "-8px",
-    background: "#ef4444",
+    background: "#fc0800", // Red remove button
     color: "white",
     border: "none",
     borderRadius: "50%",
@@ -217,29 +226,30 @@ export const styles = {
     lineHeight: "24px",
     textAlign: "center",
     cursor: "pointer",
-    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
+    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.3)",
     zIndex: 10,
   },
   resultArea: {
     marginTop: "24px",
-    border: "1px solid #e5e7eb",
+    border: "1px solid #555",
     borderRadius: "8px",
     overflow: "hidden",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.3)",
+    backgroundColor: "#2a2a2a", // Dark result area
   },
   resultTitle: {
-    backgroundColor: "#f9fafb",
+    backgroundColor: "#222", // Darker title background
     padding: "12px 16px",
     fontWeight: "600",
-    borderBottom: "1px solid #e5e7eb",
-    color: "#374151",
+    borderBottom: "1px solid #555",
+    color: "#f5f5f5", // Light text
   },
   resultImage: {
     display: "block",
     width: "100%",
     maxHeight: "500px",
     objectFit: "contain",
-    background: "#f0f0f0",
+    background: "#333", // Dark image background
     padding: "12px",
   },
   radioContainer: {
@@ -248,9 +258,9 @@ export const styles = {
     gap: "12px",
     marginBottom: "20px",
     padding: "16px",
-    border: "1px solid #e5e7eb",
+    border: "1px solid #555",
     borderRadius: "8px",
-    backgroundColor: "#f9fafb",
+    backgroundColor: "#2a2a2a", // Dark radio container
   },
   radioOption: {
     padding: "16px",
@@ -261,12 +271,12 @@ export const styles = {
     alignItems: "flex-start",
   },
   radioOptionSelected: {
-    backgroundColor: "#2563eb",
+    backgroundColor: "#fc0800", // Red selected radio
     color: "white",
   },
   radioOptionUnselected: {
-    backgroundColor: "white",
-    border: "1px solid #d1d5db",
+    backgroundColor: "#333", // Dark unselected radio
+    border: "1px solid #555",
   },
   radioLabel: {
     fontWeight: "600",
@@ -285,15 +295,15 @@ export const styles = {
     justifyContent: "center",
     padding: "24px",
     gap: "16px",
-    color: "#4b5563",
+    color: "#f5f5f5", // Light text
     textAlign: "center",
   },
   loadingSpinner: {
     width: "40px",
     height: "40px",
-    border: "4px solid rgba(37, 99, 235, 0.3)",
+    border: "4px solid rgba(252, 8, 0, 0.2)", // Transparent red
     borderRadius: "50%",
-    borderTop: "4px solid #2563eb",
+    borderTop: "4px solid #fc0800", // Red spinner
     animation: "spin 1s linear infinite",
   },
   "@keyframes spin": {
@@ -301,8 +311,8 @@ export const styles = {
     "100%": { transform: "rotate(360deg)" },
   },
   errorMessage: {
-    color: "#dc2626",
-    backgroundColor: "#fee2e2",
+    color: "#fc0800", // Red error text
+    backgroundColor: "rgba(252, 8, 0, 0.1)", // Transparent red background
     padding: "12px 16px",
     borderRadius: "6px",
     marginBottom: "16px",
@@ -310,8 +320,8 @@ export const styles = {
     fontWeight: "500",
   },
   successMessage: {
-    color: "#059669",
-    backgroundColor: "#d1fae5",
+    color: "#10B981", // Keep success green
+    backgroundColor: "rgba(16, 185, 129, 0.1)", // Transparent green
     padding: "12px 16px",
     borderRadius: "6px",
     marginBottom: "16px",
