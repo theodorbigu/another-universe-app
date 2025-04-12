@@ -28,14 +28,25 @@ export const styles = {
     top: 0,
     left: 0,
   },
+  navbarHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: "32px",
+    padding: "0 0 16px 0",
+    borderBottom: "1px solid rgba(255,255,255,0.1)",
+  },
+  navbarLogo: {
+    width: "68px",
+    height: "68px",
+    marginRight: "12px",
+    objectFit: "contain",
+  },
   navbarTitle: {
     fontSize: "1.5rem",
     fontWeight: "700",
-    marginBottom: "32px",
-    textAlign: "center",
-    padding: "0 0 16px 0",
-    borderBottom: "1px solid rgba(255,255,255,0.1)",
     color: "#fc0800", // Red color for the title
+    margin: 0,
   },
   navList: {
     display: "flex",
@@ -327,5 +338,16 @@ export const styles = {
     marginBottom: "16px",
     fontSize: "0.875rem",
     fontWeight: "500",
+  },
+  // Updated home page styles
+  homeLogoContainer: {
+    display: "flex",
+    justifyContent: "center",
+    marginBottom: "40px",
+  },
+  homeLogo: {
+    width: "240px",
+    height: "240px",
+    objectFit: "contain",
   },
 };

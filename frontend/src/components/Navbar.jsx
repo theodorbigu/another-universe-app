@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { styles } from "../styles";
+import logoImg from "../assets/car-tunning-logo-red.png";
 
 function Navbar() {
   const location = useLocation();
@@ -7,7 +8,14 @@ function Navbar() {
 
   return (
     <div style={styles.navbar}>
-      <h2 style={styles.navbarTitle}>Car Tunning AI</h2>
+      <div style={styles.navbarHeader}>
+        <img
+          src={logoImg}
+          alt="Car Tunning AI Logo"
+          style={styles.navbarLogo}
+        />
+        <h2 style={styles.navbarTitle}>Car Tunning AI</h2>
+      </div>
       <div style={styles.navList}>
         <Link
           to="/"
