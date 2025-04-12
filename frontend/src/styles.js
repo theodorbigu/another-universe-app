@@ -11,50 +11,58 @@ export const styles = {
   // Updated layout styles to take full screen
   appLayout: {
     display: "flex",
+    flexDirection: "column", // Changed to column to stack navbar on top
     width: "100%",
     height: "100vh",
     backgroundColor: "#222",
     overflow: "hidden",
   },
   navbar: {
-    width: "250px",
+    width: "100%", // Full width
     backgroundColor: "#111", // Darker shade of black for navbar
     color: "#fff",
-    padding: "24px 16px",
+    padding: "8px 30px", // Reduced vertical padding
     display: "flex",
-    flexDirection: "column",
-    height: "100vh", // Make navbar full height
+    flexDirection: "row", // Changed to row for horizontal layout
+    alignItems: "center", // Center items vertically
+    justifyContent: "space-between", // Space between logo and nav links
+    height: "auto", // Auto height
     position: "sticky", // Keep navbar in place
     top: 0,
     left: 0,
+    zIndex: 100, // Ensure navbar is above other content
+    boxShadow: "0 2px 8px rgba(0,0,0,0.3)", // Add shadow for depth
   },
   navbarHeader: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
-    marginBottom: "32px",
-    padding: "0 0 16px 0",
-    borderBottom: "1px solid rgba(255,255,255,0.1)",
+    padding: "0",
+    marginRight: "0", // Remove margin
+    width: "200px", // Fixed width for the logo area
   },
   navbarLogo: {
-    width: "68px",
-    height: "68px",
+    width: "50px", // Reduced logo size
+    height: "50px", // Reduced logo size
     marginRight: "12px",
     objectFit: "contain",
   },
   navbarTitle: {
-    fontSize: "1.5rem",
+    fontSize: "1.25rem",
     fontWeight: "700",
     color: "#fc0800", // Red color for the title
     margin: 0,
+    whiteSpace: "nowrap", // Prevent wrapping
   },
   navList: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row", // Changed to row for horizontal layout
     gap: "8px",
+    flexWrap: "wrap", // Allow wrapping on smaller screens
+    justifyContent: "center", // Center the navigation items
+    flex: 1, // Take up remaining space
   },
   navItem: {
-    padding: "12px 16px",
+    padding: "8px 16px", // Reduced vertical padding
     borderRadius: "8px",
     color: "#f5f5f5", // Light grey text
     textDecoration: "none",
@@ -67,10 +75,16 @@ export const styles = {
     fontWeight: "600",
     color: "#fc0800", // Red text for active item
   },
+  navbarActions: {
+    display: "flex",
+    justifyContent: "center", // Changed from flex-end to center
+    width: "200px", // Keep the width
+    paddingRight: "20px", // Add padding to move button to the left
+  },
   mainContent: {
     flex: 1,
     padding: "32px",
-    height: "100vh",
+    height: "calc(100vh - 66px)", // Updated for thinner navbar
     overflowY: "auto",
     backgroundColor: "#333", // Dark grey for main content
   },

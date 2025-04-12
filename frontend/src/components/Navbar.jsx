@@ -9,23 +9,15 @@ function Navbar() {
   return (
     <div style={styles.navbar}>
       <div style={styles.navbarHeader}>
-        <img
-          src={logoImg}
-          alt="Car Tunning AI Logo"
-          style={styles.navbarLogo}
-        />
-        <h2 style={styles.navbarTitle}>Car Tunning AI</h2>
+        <Link to="/">
+          <img
+            src={logoImg}
+            alt="Car Tunning AI Logo"
+            style={styles.navbarLogo}
+          />
+        </Link>
       </div>
       <div style={styles.navList}>
-        <Link
-          to="/"
-          style={{
-            ...styles.navItem,
-            ...(isActive("/") ? styles.navItemActive : {}),
-          }}
-        >
-          Home
-        </Link>
         <Link
           to="/generate"
           style={{
@@ -33,7 +25,7 @@ function Navbar() {
             ...(isActive("/generate") ? styles.navItemActive : {}),
           }}
         >
-          Generate Images
+          Generate
         </Link>
         <Link
           to="/edit"
@@ -42,7 +34,7 @@ function Navbar() {
             ...(isActive("/edit") ? styles.navItemActive : {}),
           }}
         >
-          Edit Images
+          Edit
         </Link>
         <Link
           to="/creations"
@@ -60,8 +52,13 @@ function Navbar() {
             ...(isActive("/slider") ? styles.navItemActive : {}),
           }}
         >
-          Comparison Slider
+          Compare
         </Link>
+      </div>
+      <div style={styles.navbarActions}>
+        <button style={{ ...styles.button, ...styles.buttonOutline }}>
+          Login
+        </button>
       </div>
     </div>
   );
