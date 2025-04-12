@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import ImageGeneration from "./components/ImageGeneration";
 import ImageEditing from "./components/ImageEditing";
 import Creations from "./components/Creations";
+import SliderPage from "./components/SliderPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="generate" element={<ImageGeneration />} />
           <Route path="edit" element={<ImageEditing />} />
           <Route path="creations" element={<Creations />} />
+          <Route path="slider" element={<SliderPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

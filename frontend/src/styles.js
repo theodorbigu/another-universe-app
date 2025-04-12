@@ -422,4 +422,12 @@ export const styles = {
     backgroundColor: "#0077cc", // Blue for secondary actions
     color: "white",
   },
+  // Slider specific styles
+  sliderContainer: {
+    border: "1px solid #444",
+    borderRadius: "8px",
+    padding: "10px",
+    backgroundColor: "#222",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
+  },
 };

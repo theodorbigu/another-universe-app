@@ -53,6 +53,15 @@ function Navbar() {
         >
           Creations
         </Link>
+        <Link
+          to="/slider"
+          style={{
+            ...styles.navItem,
+            ...(isActive("/slider") ? styles.navItemActive : {}),
+          }}
+        >
+          Comparison Slider
+        </Link>
       </div>
     </div>
   );
