@@ -1,0 +1,48 @@
+/* Base styles */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Custom focus styles */
+textarea:focus,
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+  border-color: #2563eb;
+}
+
+/* Hover effects */
+button:hover {
+  filter: brightness(1.1);
+}
+
+.file-upload-area:hover {
+  border-color: #93c5fd;
+  background-color: #f0f7ff;
+  color: #2563eb;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .container {
+    padding: 16px 12px;
+  }
+
+  .vstack {
+    padding: 20px;
+  }
+}
