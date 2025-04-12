@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { styles } from "../styles";
+import { MoveHorizontal } from "lucide-react";
 
 const ImageSlider = ({
   beforeImage,
@@ -10,6 +11,8 @@ const ImageSlider = ({
   const [sliderPosition, setSliderPosition] = useState(50); // Start at 50% to show half of each
   const [imageRatio, setImageRatio] = useState(1); // Default 1:1 ratio
   const sliderContainerRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
 
   // Preload images to get their natural dimensions
   useEffect(() => {
@@ -31,6 +34,53 @@ const ImageSlider = ({
     setSliderPosition(e.target.value);
   };
 
+  // Handle drag events for the slider handle
+  const startDrag = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const endDrag = () => {
+    setIsDragging(false);
+  };
+
+  const onDrag = (e) => {
+    if (isDragging && sliderContainerRef.current) {
+      const containerRect = sliderContainerRef.current.getBoundingClientRect();
+      const containerWidth = containerRect.width;
+
+      // Calculate position based on mouse/touch position relative to container
+      let newPos;
+      if (e.type === "touchmove") {
+        newPos =
+          ((e.touches[0].clientX - containerRect.left) / containerWidth) * 100;
+      } else {
+        newPos = ((e.clientX - containerRect.left) / containerWidth) * 100;
+      }
+
+      // Clamp values to valid range
+      newPos = Math.max(0, Math.min(100, newPos));
+      setSliderPosition(newPos);
+    }
+  };
+
+  // Add event listeners for drag
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener("mousemove", onDrag);
+      window.addEventListener("touchmove", onDrag);
+      window.addEventListener("mouseup", endDrag);
+      window.addEventListener("touchend", endDrag);
+    }
+
+    return () => {
+      window.removeEventListener("mousemove", onDrag);
+      window.removeEventListener("touchmove", onDrag);
+      window.removeEventListener("mouseup", endDrag);
+      window.removeEventListener("touchend", endDrag);
+    };
+  }, [isDragging]);
+
   // Calculate container styles based on the size prop
   const containerStyles = {
     ...styles.sliderContainer,
@@ -50,7 +100,10 @@ const ImageSlider = ({
           width: "100%",
           paddingBottom: `${imageRatio * 100}%`, // Dynamic padding based on image ratio
           backgroundColor: "#222",
+          cursor: isDragging ? "ew-resize" : "grab",
         }}
+        onMouseDown={startDrag}
+        onTouchStart={startDrag}
       >
         {/* After image (edited car) - base layer */}
         <div
@@ -107,14 +160,66 @@ const ImageSlider = ({
             bottom: 0,
             left: `${sliderPosition}%`,
             width: "2px",
-            backgroundColor: "#fc0800",
+            backgroundColor: "#333333",
             zIndex: 3,
           }}
         />
-      </div>
 
-      {/* Slider controls */}
-      <div style={{ width: "100%", padding: "10px 0" }}>
+        {/* Draggable handle in the middle of the line */}
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: `${sliderPosition}%`,
+            transform: `translate(-50%, -50%) ${
+              isHovering
+                ? "scale(1.1)"
+                : isDragging
+                ? "scale(1.15)"
+                : "scale(1)"
+            }`,
+            width: "30px",
+            height: "30px",
+            borderRadius: "50%",
+            backgroundColor: "rgb(51, 51, 51)",
+            border: "none",
+            boxShadow: isDragging
+              ? "0 4px 8px rgba(51, 51, 51, 0.7), 0 0 12px rgba(51, 51, 51, 0.7)"
+              : isHovering
+              ? "0 0 5px rgba(0, 0, 0, 0.5), 0 0 8px rgba(51, 51, 51, 0.5)"
+              : "0 0 5px rgba(0, 0, 0, 0.5)",
+            zIndex: 4,
+            cursor: isDragging ? "ew-resize" : "pointer",
+            transition: "transform 0.2s ease, box-shadow 0.2s ease",
+          }}
+          onMouseDown={startDrag}
+          onTouchStart={startDrag}
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+        >
+          {/* Arrow indicators */}
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              display: "flex",
+              justifyContent: "space-between",
+              // width: "12px",
+              opacity: isHovering || isDragging ? 1 : 0.8,
+              transition: "opacity 0.2s ease",
+            }}
+          >
+            <MoveHorizontal
+              size={20}
+              strokeWidth={1}
+              color={isHovering || isDragging ? "white" : "#e0e0e0"}
+            />
+          </div>
+        </div>
+
+        {/* Invisible range input positioned over the image */}
         <input
           type="range"
           min="0"
@@ -122,9 +227,17 @@ const ImageSlider = ({
           value={sliderPosition}
           onChange={handleSliderChange}
           style={{
-            width: "100%",
-            margin: "10px 0",
-            accentColor: "#fc0800",
+            position: "absolute",
+            top: "50%",
+            left: 0,
+            transform: "translateY(-50%)",
+            // width: "100%",
+            margin: 0,
+            accentColor: "transparent",
+            opacity: 0, // Make it invisible
+            zIndex: 5, // Higher than the handle to capture events
+            cursor: "pointer",
+            height: "40px", // Taller hit area for easier interaction
           }}
         />
       </div>
