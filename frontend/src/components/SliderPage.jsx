@@ -18,16 +18,20 @@ function SliderPage() {
           beforeImage={originalCar}
           afterImage={editedCar}
           alt="Car tuning comparison"
+          size={70}
         />
       </div>
 
+      <h2 style={{ ...styles.heading, fontSize: "1.5rem" }}>
+        Individual Images
+      </h2>
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
           flexWrap: "wrap",
           gap: "20px",
-          marginTop: "40px",
+          marginTop: "20px",
         }}
       >
         <div style={{ flex: 1, minWidth: "300px" }}>
