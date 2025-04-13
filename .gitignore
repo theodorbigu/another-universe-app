@@ -33,6 +33,6 @@ backend/.env
 frontend/.env
 backend/node_modules
 frontend/node_modules
-car-segementation/app/input
-car-segementation/app/model
-car-segementation/app/__pycache__
+car-segmentation-ms/app/input
+car-segmentation-ms/app/model
+car-segmentation-ms/app/__pycache__
