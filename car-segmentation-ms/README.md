@@ -5,7 +5,9 @@ https://www.anaconda.com/
 cd car-segmentation-ms
 conda env create -f environment.yml
 conda activate sam-microservice
-uvicorn app.main:app --reload
+uvicorn app.server:app --reload
+
+conda remove --name sam-microservice --all
 
 ### You can test the endpoint using Swagger UI:
 Go to: http://127.0.0.1:8000/docs

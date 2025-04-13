@@ -21,3 +21,6 @@ dependencies:
       - pillow
       - yolov5
       - ultralytics
+      - python-dotenv
+      - openai
+      - requests
