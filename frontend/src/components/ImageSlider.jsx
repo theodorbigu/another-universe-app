@@ -88,6 +88,7 @@ const ImageSlider = ({
     width: `${size}%`, // Use size prop to control width
     maxWidth: size < 100 ? "none" : "800px", // Only apply max-width if size is 100%
     margin: "0 auto",
+    fontFamily: "'Rajdhani', sans-serif", // Apply Rajdhani font
   };
 
   return (
