@@ -1,6 +1,6 @@
 export const styles = {
   container: {
-    backgroundColor: "#222", // Dark background
+    backgroundColor: "#1b1a1f", // Updated dark background
     minHeight: "100vh",
     padding: "0", // Remove padding
     fontFamily:
@@ -14,12 +14,12 @@ export const styles = {
     flexDirection: "column", // Changed to column to stack navbar on top
     width: "100%",
     height: "100vh",
-    backgroundColor: "#222",
+    backgroundColor: "#1b1a1f", // Updated dark background
     overflow: "hidden",
   },
   navbar: {
     width: "100%", // Full width
-    backgroundColor: "#111", // Darker shade of black for navbar
+    backgroundColor: "var(--main-bg)", // Use CSS variable for background
     color: "#fff",
     padding: "8px 30px", // Reduced vertical padding
     display: "flex",
@@ -31,7 +31,15 @@ export const styles = {
     top: 0,
     left: 0,
     zIndex: 100, // Ensure navbar is above other content
-    boxShadow: "0 2px 8px rgba(0,0,0,0.3)", // Add shadow for depth
+    // Set the *longer* transition for disappearance (when scrolled class is removed)
+    transition: "border-bottom 0.6s ease", // e.g., 0.8s for slow fade out
+    // Ensure border is initially transparent or none if you want it to fade in
+    borderBottom: "1px solid transparent", // Start with a transparent border
+  },
+  navbarScrolled: {
+    borderBottom: "1px solid black", // Black border when scrolled
+    // Set the *shorter* transition for appearance (overrides base transition)
+    transition: "border-bottom 0.2s ease", // e.g., 0.2s for quick fade in
   },
   navbarHeader: {
     display: "flex",
@@ -86,7 +94,9 @@ export const styles = {
     padding: "32px",
     height: "calc(100vh - 66px)", // Updated for thinner navbar
     overflowY: "auto",
-    backgroundColor: "#333", // Dark grey for main content
+    backgroundColor: "#1b1a1f", // Updated dark background
+    // Prevent scroll chaining/bounce effect when scrolling past boundaries
+    overscrollBehaviorY: "contain",
   },
   // Styles for page content
   pageContainer: {
@@ -443,5 +453,8 @@ export const styles = {
     padding: "10px",
     // backgroundColor: "#222",
     // boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
+  },
+  ":root": {
+    "--main-bg": "#1b1a1f",
   },
 };
