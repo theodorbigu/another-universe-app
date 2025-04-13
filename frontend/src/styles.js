@@ -18,35 +18,30 @@ export const styles = {
     overflow: "hidden",
   },
   navbar: {
-    width: "100%", // Full width
+    //width: "100%", // Full width
     backgroundColor: "var(--main-bg)", // Use CSS variable for background
     color: "#fff",
-    padding: "8px 30px", // Reduced vertical padding
+    padding: "8px 15%", // Adjusted padding: 8px top/bottom, 20% left/right
     display: "flex",
-    flexDirection: "row", // Changed to row for horizontal layout
-    alignItems: "center", // Center items vertically
-    justifyContent: "space-between", // Space between logo and nav links
-    height: "auto", // Auto height
-    position: "sticky", // Keep navbar in place
+    flexDirection: "row",
+    alignItems: "center",
+    height: "auto",
+    position: "sticky",
     top: 0,
     left: 0,
-    zIndex: 100, // Ensure navbar is above other content
-    // Set the *longer* transition for disappearance (when scrolled class is removed)
-    transition: "border-bottom 0.6s ease", // e.g., 0.8s for slow fade out
-    // Ensure border is initially transparent or none if you want it to fade in
-    borderBottom: "1px solid transparent", // Start with a transparent border
+    zIndex: 100,
+    transition: "border-bottom 0.6s ease",
+    borderBottom: "1px solid transparent",
   },
   navbarScrolled: {
-    borderBottom: "1px solid black", // Black border when scrolled
-    // Set the *shorter* transition for appearance (overrides base transition)
-    transition: "border-bottom 0.2s ease", // e.g., 0.2s for quick fade in
+    borderBottom: "1px solid black",
+    transition: "border-bottom 0.2s ease",
   },
   navbarHeader: {
     display: "flex",
     alignItems: "center",
     padding: "0",
-    marginRight: "0", // Remove margin
-    width: "200px", // Fixed width for the logo area
+    marginRight: "0",
   },
   navbarLogo: {
     width: "50px", // Reduced logo size
@@ -63,11 +58,10 @@ export const styles = {
   },
   navList: {
     display: "flex",
-    flexDirection: "row", // Changed to row for horizontal layout
+    flexDirection: "row",
     gap: "8px",
-    flexWrap: "wrap", // Allow wrapping on smaller screens
-    justifyContent: "center", // Center the navigation items
-    flex: 1, // Take up remaining space
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
   navItem: {
     padding: "8px 16px", // Reduced vertical padding
@@ -75,19 +69,27 @@ export const styles = {
     color: "#f5f5f5", // Light grey text
     textDecoration: "none",
     fontWeight: "500",
-    transition: "all 0.2s ease",
+    transition: "color 0.2s ease", // Transition color only
     display: "block",
+    ":hover": {
+      // Added hover style
+      color: "var(--accent-red)", // Corrected color to accent red variable
+    },
   },
   navItemActive: {
-    backgroundColor: "rgba(252, 8, 0, 0.2)", // Transparent red for active item
+    //backgroundColor: "rgba(252, 8, 0, 0.2)", // Transparent red for active item
     fontWeight: "600",
     color: "#fc0800", // Red text for active item
   },
   navbarActions: {
     display: "flex",
-    justifyContent: "center", // Changed from flex-end to center
-    width: "200px", // Keep the width
-    paddingRight: "20px", // Add padding to move button to the left
+    alignItems: "center", // Align items vertically
+  },
+  navbarRightContainer: {
+    display: "flex",
+    alignItems: "center",
+    marginLeft: "auto", // Push to the right
+    gap: "24px", // Adjust gap between navList and actions
   },
   mainContent: {
     flex: 1,

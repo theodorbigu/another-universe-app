@@ -6,6 +6,7 @@ import { CarFront } from "lucide-react";
 function Navbar() {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
+  const isHomeActive = location.pathname === "/";
   const [showBorder, setShowBorder] = useState(false);
 
   useEffect(() => {
@@ -42,59 +43,65 @@ function Navbar() {
         <Link to="/">
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              color: "white",
-              textDecoration: "none",
+              ...styles.navbarLogoLink,
+              ...(isHomeActive ? styles.navbarLogoLinkActive : {}),
             }}
           >
-            <CarFront size={40} strokeWidth={1} />
+            <CarFront
+              size={60}
+              strokeWidth={1}
+              style={{ ...(isHomeActive ? styles.navbarLogoLinkActive : {}) }}
+            />
             {/* <h2> Car Tunning AI</h2> */}
           </div>
         </Link>
       </div>
-      <div style={styles.navList}>
-        <Link
-          to="/generate"
-          style={{
-            ...styles.navItem,
-            ...(isActive("/generate") ? styles.navItemActive : {}),
-          }}
-        >
-          Generate
-        </Link>
-        <Link
-          to="/edit"
-          style={{
-            ...styles.navItem,
-            ...(isActive("/edit") ? styles.navItemActive : {}),
-          }}
-        >
-          Edit
-        </Link>
-        <Link
-          to="/creations"
-          style={{
-            ...styles.navItem,
-            ...(isActive("/creations") ? styles.navItemActive : {}),
-          }}
-        >
-          Creations
-        </Link>
-        <Link
-          to="/slider"
-          style={{
-            ...styles.navItem,
-            ...(isActive("/slider") ? styles.navItemActive : {}),
-          }}
-        >
-          Compare
-        </Link>
-      </div>
-      <div style={styles.navbarActions}>
-        <button style={{ ...styles.button, ...styles.buttonOutline }}>
-          Login
-        </button>
+
+      {/* New container for right-aligned items */}
+      <div style={styles.navbarRightContainer}>
+        <div style={styles.navList}>
+          <Link
+            to="/generate"
+            style={{
+              ...styles.navItem,
+              ...(isActive("/generate") ? styles.navItemActive : {}),
+            }}
+          >
+            Generate
+          </Link>
+          <Link
+            to="/edit"
+            style={{
+              ...styles.navItem,
+              ...(isActive("/edit") ? styles.navItemActive : {}),
+            }}
+          >
+            Edit
+          </Link>
+          <Link
+            to="/creations"
+            style={{
+              ...styles.navItem,
+              ...(isActive("/creations") ? styles.navItemActive : {}),
+            }}
+          >
+            Creations
+          </Link>
+          <Link
+            to="/slider"
+            style={{
+              ...styles.navItem,
+              ...(isActive("/slider") ? styles.navItemActive : {}),
+            }}
+          >
+            Compare
+          </Link>
+        </div>
+        <div style={styles.navbarActions}>
+          <button style={{ ...styles.button, ...styles.buttonOutline }}>
+            Login
+          </button>
+        </div>
       </div>
     </div>
   );

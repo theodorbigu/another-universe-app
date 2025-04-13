@@ -5,7 +5,7 @@ function Home() {
   return (
     <div style={styles.pageContainer}>
       <div style={styles.homeLogoContainer}>
-        <CarFront size={240} strokeWidth={1} color="red" />
+        <CarFront size={240} strokeWidth={1} color="white" />
       </div>
       <h1 style={styles.mainHeading}>Car Tunning AI</h1>
 
