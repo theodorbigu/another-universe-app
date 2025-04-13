@@ -1,20 +1,56 @@
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { styles } from "../styles";
-import logoImg from "../assets/car-tunning-logo.png";
+import { CarFront } from "lucide-react";
 
 function Navbar() {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
+  const [showBorder, setShowBorder] = useState(false);
+
+  useEffect(() => {
+    const scrollContainer = document.getElementById("main-content-area");
+
+    if (!scrollContainer) {
+      console.error("Scrollable container #main-content-area not found.");
+      return;
+    }
+
+    const handleScroll = (event) => {
+      const scrollTop = event.target.scrollTop;
+      console.log("Container ScrollTop:", scrollTop);
+      if (scrollTop > 0) {
+        setShowBorder(true);
+      } else {
+        setShowBorder(false);
+      }
+    };
+
+    scrollContainer.addEventListener("scroll", handleScroll);
+
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <div style={styles.navbar}>
+    <div
+      style={{
+        ...styles.navbar,
+        ...(showBorder ? styles.navbarScrolled : {}),
+      }}
+    >
       <div style={styles.navbarHeader}>
         <Link to="/">
-          <img
-            src={logoImg}
-            alt="Car Tunning AI Logo"
-            style={styles.navbarLogo}
-          />
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              color: "white",
+              textDecoration: "none",
+            }}
+          >
+            <CarFront size={40} strokeWidth={1} />
+            {/* <h2> Car Tunning AI</h2> */}
+          </div>
         </Link>
       </div>
       <div style={styles.navList}>
