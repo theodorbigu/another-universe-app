@@ -31,3 +31,8 @@ dist-ssr
 .env.production.local
 backend/.env
 frontend/.env
+backend/node_modules
+frontend/node_modules
+car-segementation/app/input/
+car-segementation/app/model/
+car-segementation/app/__pycache__/
