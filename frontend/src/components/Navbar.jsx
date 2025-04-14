@@ -43,7 +43,7 @@ function Navbar() {
             <CarFront
               size={60}
               strokeWidth={1}
-              color={isHomeActive ? "#fc0800" : "white"}
+              color={isHomeActive ? "#b5332f" : "white"}
             />
           </div>
         </Link>
