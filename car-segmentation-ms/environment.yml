@@ -1,0 +1,25 @@
+name: sam-microservice
+channels:
+  - defaults
+  - conda-forge
+  - pytorch
+  - nvidia
+
+dependencies:
+  - python=3.9
+  - pip
+  - pytorch
+  - torchvision
+  - torchaudio
+  - pip:
+      - opencv-python
+      - fastapi
+      - uvicorn
+      - git+https://github.com/facebookresearch/segment-anything.git
+      - python-multipart
+      - pillow
+      - yolov5
+      - ultralytics
+      - python-dotenv
+      - openai
+      - requests
