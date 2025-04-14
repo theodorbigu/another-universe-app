@@ -43,9 +43,9 @@ function Navbar() {
             <CarFront
               size={60}
               strokeWidth={1}
-              className={`${isHomeActive ? "navbar-logo-link-active" : ""}`}
+              color={isHomeActive ? "#fc0800" : "white"}
+              // className={`${isHomeActive ? "navbar-logo-link-active" : ""}`}
             />
-            {/* <h2> Car Tunning AI</h2> */}
           </div>
         </Link>
       </div>
