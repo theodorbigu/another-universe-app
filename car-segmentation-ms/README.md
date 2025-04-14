@@ -7,6 +7,7 @@ conda env create -f environment.yml
 conda activate sam-microservice
 uvicorn app.server:app --reload
 
+### for remove: 
 conda remove --name sam-microservice --all
 
 ### You can test the endpoint using Swagger UI:

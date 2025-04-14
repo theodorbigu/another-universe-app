@@ -63,8 +63,8 @@ router.post("/", upload.single("image"), async (req, res) => {
     }
 
     try {
-      // DALL-E 2 Image Edit Request with auto-generated mask
-      console.log("Using DALL-E 2 Image Edit with auto-generated mask");
+      // DALL-E 2 Image Edit Request with pre-existing mask
+      console.log("Using DALL-E 2 Image Edit with pre-existing mask");
 
       // Create temp paths
       const tempDir = os.tmpdir();
@@ -73,7 +73,9 @@ router.post("/", upload.single("image"), async (req, res) => {
         tempDir,
         `processed-${Date.now()}.png`
       );
-      const maskTempPath = path.join(tempDir, `mask-${Date.now()}.png`);
+
+      // Path to the pre-existing mask file
+      const maskPath = path.join(__dirname, "../images/mask_transparent.png");
 
       // Write original buffer to a temporary file
       fs.writeFileSync(originalTempPath, uploadedImage.buffer);
@@ -91,27 +93,21 @@ router.post("/", upload.single("image"), async (req, res) => {
       const { width, height } = metadata;
       console.log(`Image dimensions: ${width}x${height}`);
 
-      // Create a transparent mask (all white with alpha transparency)
-      // This will make the entire image editable by DALL-E
-      await sharp({
-        create: {
-          width: width,
-          height: height,
-          channels: 4,
-          background: { r: 255, g: 255, b: 255, alpha: 0 }, // Fully transparent
-        },
-      })
-        .png()
-        .toFile(maskTempPath);
+      // Using pre-existing mask from images directory
+      console.log("Using pre-existing mask from images directory");
 
-      console.log("Created transparent mask for image editing");
+      // Create File objects with explicit mimetypes
+      const processedImageFile = await toFile(
+        fs.readFileSync(processedTempPath),
+        "image.png",
+        { contentType: "image/png" }
+      );
 
-      // Use toFile to convert the streams
-      const imageStream = fs.createReadStream(processedTempPath);
-      const maskStream = fs.createReadStream(maskTempPath);
-
-      const processedImageFile = await toFile(imageStream);
-      const maskImageFile = await toFile(maskStream);
+      const maskImageFile = await toFile(
+        fs.readFileSync(maskPath),
+        "mask.png",
+        { contentType: "image/png" }
+      );
 
       // Make the API request
       console.log("Sending edit request to OpenAI");
@@ -127,7 +123,6 @@ router.post("/", upload.single("image"), async (req, res) => {
       try {
         fs.unlinkSync(originalTempPath);
         fs.unlinkSync(processedTempPath);
-        fs.unlinkSync(maskTempPath);
       } catch (cleanupError) {
         console.error("Error cleaning up temp files:", cleanupError);
       }

@@ -35,7 +35,11 @@ def segment_car(content):
     # Apply final mask to original image (other areas blacked out)
     masked_img = np.zeros_like(img)
     masked_img[car_mask_final] = img[car_mask_final]
-
+    # Invert the mask
+    car_mask_final = ~car_mask_final
+    # Apply inverted mask to original image
+    masked_img = np.zeros_like(img)
+    masked_img[car_mask_final] = img[car_mask_final]
     # Encode masked image to JPEG
     _, encoded_image = cv2.imencode('.jpg', masked_img)
     image_stream = io.BytesIO(encoded_image.tobytes())
