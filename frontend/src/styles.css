@@ -61,9 +61,6 @@ body {
   -o-object-fit: contain;
      object-fit: contain;
 }
-.navbar-logo-link-active {
-  color: #fc0800;
-}
 .navbar-title {
   font-size: 1.25rem;
   font-weight: 700;
