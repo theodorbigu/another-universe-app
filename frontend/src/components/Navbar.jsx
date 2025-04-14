@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { styles } from "../styles";
 import { CarFront } from "lucide-react";
 
 function Navbar() {
@@ -33,24 +32,18 @@ function Navbar() {
   }, []);
 
   return (
-    <div
-      style={{
-        ...styles.navbar,
-        ...(showBorder ? styles.navbarScrolled : {}),
-      }}
-    >
-      <div style={styles.navbarHeader}>
+    <div className={`navbar ${showBorder ? "navbar-scrolled" : ""}`}>
+      <div className="navbar-header">
         <Link to="/">
           <div
-            style={{
-              ...styles.navbarLogoLink,
-              ...(isHomeActive ? styles.navbarLogoLinkActive : {}),
-            }}
+            className={`navbar-logo-link ${
+              isHomeActive ? "navbar-logo-link-active" : ""
+            }`}
           >
             <CarFront
               size={60}
               strokeWidth={1}
-              style={{ ...(isHomeActive ? styles.navbarLogoLinkActive : {}) }}
+              className={`${isHomeActive ? "navbar-logo-link-active" : ""}`}
             />
             {/* <h2> Car Tunning AI</h2> */}
           </div>
@@ -58,49 +51,41 @@ function Navbar() {
       </div>
 
       {/* New container for right-aligned items */}
-      <div style={styles.navbarRightContainer}>
-        <div style={styles.navList}>
+      <div className="navbar-right-container">
+        <div className="nav-list">
           <Link
             to="/generate"
-            style={{
-              ...styles.navItem,
-              ...(isActive("/generate") ? styles.navItemActive : {}),
-            }}
+            className={`nav-item ${
+              isActive("/generate") ? "nav-item-active" : ""
+            }`}
           >
             Generate
           </Link>
           <Link
             to="/edit"
-            style={{
-              ...styles.navItem,
-              ...(isActive("/edit") ? styles.navItemActive : {}),
-            }}
+            className={`nav-item ${isActive("/edit") ? "nav-item-active" : ""}`}
           >
             Edit
           </Link>
           <Link
             to="/creations"
-            style={{
-              ...styles.navItem,
-              ...(isActive("/creations") ? styles.navItemActive : {}),
-            }}
+            className={`nav-item ${
+              isActive("/creations") ? "nav-item-active" : ""
+            }`}
           >
             Creations
           </Link>
           <Link
             to="/slider"
-            style={{
-              ...styles.navItem,
-              ...(isActive("/slider") ? styles.navItemActive : {}),
-            }}
+            className={`nav-item ${
+              isActive("/slider") ? "nav-item-active" : ""
+            }`}
           >
             Compare
           </Link>
         </div>
-        <div style={styles.navbarActions}>
-          <button style={{ ...styles.button, ...styles.buttonOutline }}>
-            Login
-          </button>
+        <div className="navbar-actions">
+          <button className="button button-outline">Login</button>
         </div>
       </div>
     </div>

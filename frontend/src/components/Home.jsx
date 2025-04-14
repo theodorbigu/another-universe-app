@@ -1,16 +1,16 @@
-import { styles } from "../styles";
 import { CarFront } from "lucide-react";
 
 function Home() {
   return (
-    <div style={styles.pageContainer}>
-      <div style={styles.homeLogoContainer}>
+    <div className="page-container">
+      <div className="home-logo-container">
         <CarFront size={240} strokeWidth={1} color="white" />
       </div>
-      <h1 style={styles.mainHeading}>Car Tunning AI</h1>
+      <h1 className="main-heading">Car Tunning AI</h1>
 
       {/* Hero section */}
       <div
+        className="hero-section"
         style={{
           textAlign: "center",
           maxWidth: "800px",
@@ -122,9 +122,8 @@ function Home() {
           vehicle according to your specifications.
         </p>
         <button
+          className="button button-primary"
           style={{
-            ...styles.button,
-            ...styles.buttonPrimary,
             padding: "15px 30px",
             fontSize: "1.1rem",
             fontWeight: "700",

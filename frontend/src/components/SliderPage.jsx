@@ -1,12 +1,11 @@
-import { styles } from "../styles";
 import ImageSlider from "./ImageSlider";
 import originalCar from "../assets/original_car.png";
 import editedCar from "../assets/edited_car.png";
 
 function SliderPage() {
   return (
-    <div style={styles.pageContainer}>
-      <h1 style={styles.subHeading}>Before & After Comparison</h1>
+    <div className="page-container">
+      <h1 className="sub-heading">Before & After Comparison</h1>
 
       <div style={{ marginBottom: "40px" }}>
         <p style={{ textAlign: "center", marginBottom: "20px" }}>
@@ -22,7 +21,7 @@ function SliderPage() {
         />
       </div>
 
-      <h2 style={{ ...styles.heading, fontSize: "1.5rem" }}>
+      <h2 className="heading" style={{ fontSize: "1.5rem" }}>
         Individual Images
       </h2>
       <div
