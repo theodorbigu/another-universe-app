@@ -44,7 +44,6 @@ function Navbar() {
               size={60}
               strokeWidth={1}
               color={isHomeActive ? "#fc0800" : "white"}
-              // className={`${isHomeActive ? "navbar-logo-link-active" : ""}`}
             />
           </div>
         </Link>
