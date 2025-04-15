@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signUpWithEmail, signInWithGoogle } from "../services/auth";
+import {
+  signInWithEmail,
+  signInWithGoogle,
+  resetPassword,
+} from "../../services/auth";
 
-const Register = () => {
+const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    displayName: "",
   });
   const navigate = useNavigate();
 
@@ -25,36 +28,29 @@ const Register = () => {
     setSuccess(null);
 
     try {
-      // Handle registration
-      const user = await signUpWithEmail(
-        formData.email,
-        formData.password,
-        formData.displayName
-      );
-
-      // For registration, we need to get a token first
-      const idToken = await user.getIdToken();
+      // Handle login
+      const result = await signInWithEmail(formData.email, formData.password);
 
       // Store auth user and token in localStorage
       localStorage.setItem(
         "authUser",
         JSON.stringify({
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          token: idToken,
+          uid: result.user.uid,
+          email: result.user.email,
+          displayName: result.user.displayName,
+          token: result.token,
         })
       );
 
-      setSuccess("Registration successful!");
+      setSuccess("Login successful!");
 
       // Clear form
-      setFormData({ email: "", password: "", displayName: "" });
+      setFormData({ email: "", password: "" });
 
-      // Redirect to home or login page
+      // Redirect to home or intended page
       setTimeout(() => navigate("/"), 1000);
     } catch (err) {
-      setError(err.message || "Registration failed");
+      setError(err.message || "Authentication failed");
     } finally {
       setLoading(false);
     }
@@ -79,9 +75,9 @@ const Register = () => {
         })
       );
 
-      setSuccess("Registration with Google successful!");
+      setSuccess("Login with Google successful!");
 
-      // Redirect to home
+      // Redirect to home or intended page
       setTimeout(() => navigate("/"), 1000);
     } catch (err) {
       setError(err.message || "Google authentication failed");
@@ -90,14 +86,34 @@ const Register = () => {
     }
   };
 
+  const handlePasswordReset = async () => {
+    if (!formData.email) {
+      setError("Please enter your email address");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      await resetPassword(formData.email);
+      setSuccess("Password reset email sent. Please check your inbox.");
+    } catch (err) {
+      setError(err.message || "Failed to send password reset email");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="auth-container">
-      <h2>Register</h2>
+    <div className="login-container">
+      <h2>Login</h2>
 
       {error && <div className="error-message">{error}</div>}
       {success && <div className="success-message">{success}</div>}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
@@ -122,42 +138,44 @@ const Register = () => {
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="displayName">Display Name</label>
-          <input
-            type="text"
-            id="displayName"
-            name="displayName"
-            value={formData.displayName}
-            onChange={handleInputChange}
-          />
-        </div>
-
         <div className="form-actions">
-          <button type="submit" disabled={loading}>
-            {loading ? "Processing..." : "Register"}
+          <button type="submit" disabled={loading} className="login-button">
+            {loading ? "Processing..." : "Login"}
+          </button>
+
+          <button
+            type="button"
+            onClick={handlePasswordReset}
+            disabled={loading}
+            className="reset-button"
+          >
+            Forgot Password?
           </button>
         </div>
       </form>
 
       <div className="social-login">
+        <div className="divider">
+          <span>OR</span>
+        </div>
         <button
           type="button"
           onClick={handleGoogleSignIn}
           disabled={loading}
           className="google-button"
         >
-          Register with Google
+          <img src="/google-icon.svg" alt="Google" className="google-icon" />
+          Continue with Google
         </button>
       </div>
 
       <div className="auth-toggle">
-        <Link to="/login" className="toggle-link">
-          Already have an account? Login
+        <Link to="/register" className="toggle-link">
+          Don't have an account? Register
         </Link>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default Login;
