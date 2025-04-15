@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
-import { logout } from "../services/auth";
+import { useAuth } from "../../context/AuthContext";
+import { logout } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -23,7 +23,7 @@ const Profile = () => {
         setUserData(response.data.user);
       } catch (err) {
         console.error("Error fetching user profile:", err);
-        setError("Failed to load profile data");
+        setError("Failed to load profile data from the database");
       } finally {
         setLoading(false);
       }
@@ -31,6 +31,8 @@ const Profile = () => {
 
     if (currentUser) {
       fetchUserData();
+    } else {
+      setLoading(false);
     }
   }, [currentUser]);
 
@@ -44,20 +46,16 @@ const Profile = () => {
   };
 
   if (loading) {
-    return <div className="profile-container">Loading...</div>;
+    return (
+      <div className="profile-loading">
+        <div className="spinner"></div>
+      </div>
+    );
   }
 
-  if (error) {
-    return (
-      <>
-        <div className="profile-actions">
-          <button onClick={handleLogout} className="logout-button">
-            Log Out
-          </button>
-        </div>
-        <div className="profile-container error">{error}</div>;
-      </>
-    );
+  if (!currentUser) {
+    navigate("/login");
+    return null;
   }
 
   return (
@@ -104,17 +102,32 @@ const Profile = () => {
         {/* Supabase data if available */}
         {userData && (
           <div className="extended-profile">
-            <h3>Extended Profile Data</h3>
+            <h3>Database Profile Data</h3>
+
+            {userData.uid && (
+              <div className="profile-field">
+                <strong>User ID:</strong> {userData.uid}
+              </div>
+            )}
+
             {userData.created_at && (
               <div className="profile-field">
                 <strong>Created At:</strong>{" "}
                 {new Date(userData.created_at).toLocaleString()}
               </div>
             )}
-            {/* Add other fields from Supabase here */}
+
+            {userData.updated_at && (
+              <div className="profile-field">
+                <strong>Updated At:</strong>{" "}
+                {new Date(userData.updated_at).toLocaleString()}
+              </div>
+            )}
           </div>
         )}
       </div>
+
+      {error && <div className="profile-container error">{error}</div>}
     </div>
   );
 };

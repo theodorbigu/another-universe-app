@@ -8,7 +8,7 @@ import SliderPage from "./components/SliderPage";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import { AuthProvider } from "./context/AuthContext";
-import Profile from "./components/Profile";
+import Profile from "./components/Profile/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
