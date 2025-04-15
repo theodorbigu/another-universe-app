@@ -28,7 +28,7 @@ router.post("/save-user", verifyToken, async (req, res) => {
     const { data: existingUser, error: fetchError } = await supabase
       .from("users")
       .select("*")
-      .eq("firebase_uid", uid)
+      .eq("uid", uid)
       .single();
 
     if (fetchError && fetchError.code !== "PGRST116") {
@@ -47,9 +47,9 @@ router.post("/save-user", verifyToken, async (req, res) => {
         .update({
           email: email,
           display_name: displayName || existingUser.display_name,
-          last_sign_in: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
         })
-        .eq("firebase_uid", uid)
+        .eq("uid", uid)
         .select();
 
       if (error) {
@@ -63,11 +63,11 @@ router.post("/save-user", verifyToken, async (req, res) => {
       const { data, error } = await supabase
         .from("users")
         .insert({
-          firebase_uid: uid,
+          uid: uid,
           email: email,
           display_name: displayName || "",
           created_at: new Date().toISOString(),
-          last_sign_in: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
         })
         .select();
 
@@ -102,7 +102,7 @@ router.get("/profile", verifyToken, async (req, res) => {
     const { data, error } = await supabase
       .from("users")
       .select("*")
-      .eq("firebase_uid", req.user.uid)
+      .eq("uid", req.user.uid)
       .single();
 
     if (error) {
