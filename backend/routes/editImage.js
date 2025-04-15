@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { OpenAI, toFile } = require("openai");
+const { OpenAI } = require("openai");
 const multer = require("multer");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const sharp = require("sharp");
+const FormData = require("form-data");
+const axios = require("axios");
 
 // Multer setup (store in memory)
 const storage = multer.memoryStorage();
@@ -18,6 +20,24 @@ const upload = multer({
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+// Helper function to create File objects from file paths
+async function createFileObject(filePath, fileName, mimeType) {
+  const buffer = fs.readFileSync(filePath);
+
+  // For Node.js environments where File might not be available
+  if (typeof File === "undefined") {
+    // Create a form data friendly object with proper mime type
+    return {
+      data: buffer,
+      name: fileName,
+      type: mimeType,
+    };
+  } else {
+    // Browser or environments with File constructor
+    return new File([buffer], fileName, { type: mimeType });
+  }
+}
 
 // DALL-E 2 Image Variation endpoint
 router.post("/", upload.single("image"), async (req, res) => {
@@ -96,28 +116,35 @@ router.post("/", upload.single("image"), async (req, res) => {
       // Using pre-existing mask from images directory
       console.log("Using pre-existing mask from images directory");
 
-      // Create File objects with explicit mimetypes
-      const processedImageFile = await toFile(
-        fs.readFileSync(processedTempPath),
-        "image.png",
-        { contentType: "image/png" }
-      );
+      // Create form data with proper mime types
+      const form = new FormData();
+      form.append("prompt", prompt || "Transform this image creatively");
+      form.append("n", "1");
+      form.append("size", "1024x1024");
 
-      const maskImageFile = await toFile(
-        fs.readFileSync(maskPath),
-        "mask.png",
-        { contentType: "image/png" }
-      );
-
-      // Make the API request
-      console.log("Sending edit request to OpenAI");
-      const response = await openai.images.edit({
-        image: processedImageFile,
-        mask: maskImageFile,
-        prompt: prompt || "Transform this image creatively", // Default prompt if none provided
-        n: 1,
-        size: "1024x1024",
+      // Append files with correct mime types
+      form.append("image", fs.createReadStream(processedTempPath), {
+        filename: "image.png",
+        contentType: "image/png",
       });
+
+      form.append("mask", fs.createReadStream(maskPath), {
+        filename: "mask.png",
+        contentType: "image/png",
+      });
+
+      // Make API request with axios
+      console.log("Sending edit request to OpenAI");
+      const response = await axios.post(
+        "https://api.openai.com/v1/images/edits",
+        form,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+            ...form.getHeaders(),
+          },
+        }
+      );
 
       // Cleanup the temporary files
       try {
@@ -129,18 +156,21 @@ router.post("/", upload.single("image"), async (req, res) => {
 
       // Ensure response has expected structure
       if (
-        !response ||
         !response.data ||
-        !response.data[0] ||
-        !response.data[0].url
+        !response.data.data ||
+        !response.data.data[0] ||
+        !response.data.data[0].url
       ) {
-        console.error("Invalid response structure from OpenAI API:", response);
+        console.error(
+          "Invalid response structure from OpenAI API:",
+          response.data
+        );
         return res
           .status(500)
           .json({ error: "Invalid response from OpenAI API" });
       }
 
-      const imageUrl = response.data[0].url;
+      const imageUrl = response.data.data[0].url;
       res.json({ imageUrl });
     } catch (variationError) {
       console.error("Detailed DALL-E 2 error:", variationError);
