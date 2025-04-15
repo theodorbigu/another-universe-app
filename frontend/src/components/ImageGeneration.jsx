@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-import { styles } from "../styles";
 import { saveCreation } from "../services/api";
 
 function ImageGeneration() {
@@ -75,14 +74,14 @@ function ImageGeneration() {
   };
 
   return (
-    <div style={styles.pageContainer}>
-      <h1 style={styles.subHeading}>Image Generation with DALL-E 3</h1>
+    <div className="page-container">
+      <h1 className="sub-heading">Image Generation with DALL-E 3</h1>
 
       {/* Prompt Input */}
-      <div style={styles.formGroup}>
-        <label style={styles.label}>Prompt (required for text-to-image)</label>
+      <div className="form-group">
+        <label className="label">Prompt (required for text-to-image)</label>
         <textarea
-          style={styles.textarea}
+          className="textarea"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="Enter detailed description of the image you want to generate..."
@@ -92,10 +91,8 @@ function ImageGeneration() {
 
       {/* Process Button */}
       <button
+        className={`button button-primary ${loading ? "button-disabled" : ""}`}
         style={{
-          ...styles.button,
-          ...styles.buttonPrimary,
-          ...(loading ? styles.buttonDisabled : {}),
           width: "100%",
           marginTop: "8px",
         }}
@@ -107,31 +104,30 @@ function ImageGeneration() {
 
       {/* Loading Indicator */}
       {loading && (
-        <div style={styles.loadingContainer}>
-          <div style={styles.loadingSpinner}></div>
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
           <p>Processing your request. This may take a moment...</p>
         </div>
       )}
 
       {/* Result Image Area */}
       {imageUrl && !loading && (
-        <div style={styles.resultArea}>
-          <div style={styles.resultTitle}>Generated Image:</div>
+        <div className="result-area">
+          <div className="result-title">Generated Image:</div>
           <img
             src={imageUrl}
             alt="AI Generated Result"
-            style={styles.resultImage}
+            className="result-image"
           />
 
           {/* Save to Gallery Button */}
           <button
             style={{
-              ...styles.button,
-              ...styles.buttonSecondary,
-              ...(saving ? styles.buttonDisabled : {}),
-              ...(saveSuccess ? styles.buttonSuccess : {}),
               marginTop: "16px",
             }}
+            className={`button ${saveSuccess ? "button-success" : "button-primary"} ${
+              loading ? "button-disabled" : ""
+            }`}
             onClick={handleSaveCreation}
             disabled={saving}
           >

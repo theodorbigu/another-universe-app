@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { getCreations } from "../services/api";
-import { styles } from "../styles";
 
 function Creations() {
   const [creations, setCreations] = useState([]);
@@ -48,41 +47,41 @@ function Creations() {
   };
 
   return (
-    <div style={styles.pageContainer}>
-      <h1 style={styles.subHeading}>Creation Gallery</h1>
+    <div className="page-container">
+      <h1 className="sub-heading">Creation Gallery</h1>
 
       {loading && (
-        <div style={styles.loadingContainer}>
-          <div style={styles.loadingSpinner}></div>
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
           <p>Loading creations...</p>
         </div>
       )}
 
       {error && !loading && (
-        <div style={{ ...styles.messageContainer, color: "red" }}>
+        <div className="message-container" style={{ color: "red" }}>
           <p>{error}</p>
         </div>
       )}
 
       {!loading && !error && creations.length === 0 && (
-        <div style={styles.messageContainer}>
+        <div className="message-container">
           <p>No creations found. Start by generating some images!</p>
         </div>
       )}
 
       {!loading && !error && creations.length > 0 && (
         <>
-          <div style={styles.galleryGrid}>
+          <div className="gallery-grid">
             {creations.map((creation) => (
-              <div key={creation.id} style={styles.galleryItem}>
+              <div key={creation.id} className="gallery-item">
                 <img
                   src={creation.image}
                   alt={creation.textprompt}
-                  style={styles.galleryImage}
+                  className="gallery-image"
                 />
-                <div style={styles.galleryCaption}>
-                  <p style={styles.galleryPrompt}>{creation.textprompt}</p>
-                  <p style={styles.galleryDate}>
+                <div className="gallery-caption">
+                  <p className="gallery-prompt">{creation.textprompt}</p>
+                  <p className="gallery-date">
                     {new Date(creation.created_at).toLocaleDateString()}
                   </p>
                 </div>
@@ -91,27 +90,21 @@ function Creations() {
           </div>
 
           {/* Pagination controls */}
-          <div style={styles.paginationControls}>
+          <div className="pagination-controls">
             <button
               onClick={handlePrevPage}
               disabled={page <= 1}
-              style={{
-                ...styles.button,
-                ...(page <= 1 ? styles.buttonDisabled : {}),
-              }}
+              className={`button ${page <= 1 ? "button-disabled" : ""}`}
             >
               Previous
             </button>
-            <span style={styles.paginationInfo}>
+            <span className="pagination-info">
               Page {page} of {totalPages || 1}
             </span>
             <button
               onClick={handleNextPage}
               disabled={page >= totalPages}
-              style={{
-                ...styles.button,
-                ...(page >= totalPages ? styles.buttonDisabled : {}),
-              }}
+              className={`button ${page >= totalPages ? "button-disabled" : ""}`}
             >
               Next
             </button>

@@ -1,64 +1,99 @@
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { styles } from "../styles";
-import logoImg from "../assets/car-tunning-logo.png";
+import { CarFront, SquareUser } from "lucide-react";
 
 function Navbar() {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
+  const isHomeActive = location.pathname === "/";
+  const [showBorder, setShowBorder] = useState(false);
+
+  useEffect(() => {
+    const scrollContainer = document.getElementById("main-content-area");
+
+    if (!scrollContainer) {
+      console.error("Scrollable container #main-content-area not found.");
+      return;
+    }
+
+    const handleScroll = (event) => {
+      const scrollTop = event.target.scrollTop;
+      console.log("Container ScrollTop:", scrollTop);
+      if (scrollTop > 0) {
+        setShowBorder(true);
+      } else {
+        setShowBorder(false);
+      }
+    };
+
+    scrollContainer.addEventListener("scroll", handleScroll);
+
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <div style={styles.navbar}>
-      <div style={styles.navbarHeader}>
+    <div className={`navbar ${showBorder ? "navbar-scrolled" : ""}`}>
+      <div className="navbar-header">
         <Link to="/">
-          <img
-            src={logoImg}
-            alt="Car Tunning AI Logo"
-            style={styles.navbarLogo}
-          />
+          <div
+            className={`navbar-logo-link ${
+              isHomeActive ? "navbar-logo-link-active" : ""
+            }`}
+          >
+            <CarFront
+              size={60}
+              strokeWidth={1}
+              color={isHomeActive ? "#b5332f" : "white"}
+            />
+          </div>
         </Link>
       </div>
-      <div style={styles.navList}>
-        <Link
-          to="/generate"
-          style={{
-            ...styles.navItem,
-            ...(isActive("/generate") ? styles.navItemActive : {}),
-          }}
-        >
-          Generate
-        </Link>
-        <Link
-          to="/edit"
-          style={{
-            ...styles.navItem,
-            ...(isActive("/edit") ? styles.navItemActive : {}),
-          }}
-        >
-          Edit
-        </Link>
-        <Link
-          to="/creations"
-          style={{
-            ...styles.navItem,
-            ...(isActive("/creations") ? styles.navItemActive : {}),
-          }}
-        >
-          Creations
-        </Link>
-        <Link
-          to="/slider"
-          style={{
-            ...styles.navItem,
-            ...(isActive("/slider") ? styles.navItemActive : {}),
-          }}
-        >
-          Compare
-        </Link>
-      </div>
-      <div style={styles.navbarActions}>
-        <button style={{ ...styles.button, ...styles.buttonOutline }}>
-          Login
-        </button>
+
+      {/* New container for right-aligned items */}
+      <div className="navbar-right-container">
+        <div className="nav-list">
+          <Link
+            to="/generate"
+            className={`nav-item ${
+              isActive("/generate") ? "nav-item-active" : ""
+            }`}
+          >
+            Generate
+          </Link>
+          <Link
+            to="/edit"
+            className={`nav-item ${isActive("/edit") ? "nav-item-active" : ""}`}
+          >
+            Edit
+          </Link>
+          <Link
+            to="/creations"
+            className={`nav-item ${
+              isActive("/creations") ? "nav-item-active" : ""
+            }`}
+          >
+            Creations
+          </Link>
+          <Link
+            to="/slider"
+            className={`nav-item ${
+              isActive("/slider") ? "nav-item-active" : ""
+            }`}
+          >
+            Compare
+          </Link>
+          <Link
+            to="/profile"
+            className={`nav-item user-icon ${
+              isActive("/profile") ? "nav-item-active" : ""
+            }`}
+          >
+            <SquareUser size={28} strokeWidth={1.5} />
+          </Link>
+        </div>
+        <div className="navbar-actions">
+          <button className="button button-login">Login</button>
+        </div>
       </div>
     </div>
   );

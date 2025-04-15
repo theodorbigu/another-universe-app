@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { styles } from "../styles";
 import { MoveHorizontal } from "lucide-react";
 
 const ImageSlider = ({
@@ -83,7 +82,6 @@ const ImageSlider = ({
 
   // Calculate container styles based on the size prop
   const containerStyles = {
-    ...styles.sliderContainer,
     position: "relative",
     width: `${size}%`, // Use size prop to control width
     maxWidth: size < 100 ? "none" : "800px", // Only apply max-width if size is 100%

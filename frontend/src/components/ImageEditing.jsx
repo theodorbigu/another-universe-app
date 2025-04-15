@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-import { styles } from "../styles";
 
 function ImageEditing() {
   const [prompt, setPrompt] = useState("");
@@ -85,14 +84,14 @@ function ImageEditing() {
   };
 
   return (
-    <div style={styles.pageContainer}>
-      <h1 style={styles.subHeading}>Image Editing with DALL-E 2</h1>
+    <div className="page-container">
+      <h1 className="sub-heading">Image Editing with DALL-E 2</h1>
 
       {/* Prompt Input */}
-      <div style={styles.formGroup}>
-        <label style={styles.label}>Prompt (optional for image editing)</label>
+      <div className="form-group">
+        <label className="label">Prompt (optional for image editing)</label>
         <textarea
-          style={styles.textarea}
+          className="textarea"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="Optional guidance for image variation..."
@@ -101,11 +100,11 @@ function ImageEditing() {
       </div>
 
       {/* File Upload */}
-      <div style={styles.formGroup}>
-        <label style={styles.label}>Upload Image (required for DALL-E 2)</label>
+      <div className="form-group">
+        <label className="label">Upload Image (required for DALL-E 2)</label>
 
         <div
-          style={styles.fileUpload}
+          className="file-upload"
           onClick={() => document.getElementById("file-upload").click()}
         >
           <svg
@@ -150,18 +149,18 @@ function ImageEditing() {
 
       {/* Image Preview Area */}
       {uploadedFiles.length > 0 && (
-        <div style={styles.previewArea}>
-          <h3 style={styles.previewTitle}>Selected Image for Variation:</h3>
-          <div style={styles.previewWrap}>
+        <div className="preview-area">
+          <h3 className="preview-title">Selected Image for Variation:</h3>
+          <div className="preview-wrap">
             {uploadedFiles.map((fileData, index) => (
-              <div key={index} style={styles.previewItem}>
+              <div key={index} className="preview-item">
                 <img
                   src={fileData.previewUrl}
                   alt={`Preview ${index}`}
-                  style={styles.previewImage}
+                  className="preview-image"
                 />
                 <button
-                  style={styles.removeButton}
+                  className="remove-button"
                   onClick={() => removeFile(index)}
                   aria-label={`Remove image ${index + 1}`}
                 >
@@ -175,10 +174,8 @@ function ImageEditing() {
 
       {/* Process Button */}
       <button
+        className={`button button-primary ${loading ? "button-disabled" : ""}`}
         style={{
-          ...styles.button,
-          ...styles.buttonPrimary,
-          ...(loading ? styles.buttonDisabled : {}),
           width: "100%",
           marginTop: "8px",
         }}
@@ -190,20 +187,20 @@ function ImageEditing() {
 
       {/* Loading Indicator */}
       {loading && (
-        <div style={styles.loadingContainer}>
-          <div style={styles.loadingSpinner}></div>
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
           <p>Processing your request. This may take a moment...</p>
         </div>
       )}
 
       {/* Result Image Area */}
       {imageUrl && !loading && (
-        <div style={styles.resultArea}>
-          <div style={styles.resultTitle}>Generated Variation:</div>
+        <div className="result-area">
+          <div className="result-title">Generated Variation:</div>
           <img
             src={imageUrl}
             alt="AI Generated Result"
-            style={styles.resultImage}
+            className="result-image"
           />
         </div>
       )}
