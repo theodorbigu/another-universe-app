@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CarFront, SquareUser } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { currentUser, isAuthenticated } = useAuth();
   const isActive = (path) => location.pathname === path;
   const isHomeActive = location.pathname === "/";
   const [showBorder, setShowBorder] = useState(false);
@@ -82,17 +85,46 @@ function Navbar() {
           >
             Compare
           </Link>
-          <Link
-            to="/profile"
-            className={`nav-item user-icon ${
-              isActive("/profile") ? "nav-item-active" : ""
-            }`}
-          >
-            <SquareUser size={28} strokeWidth={1.5} />
-          </Link>
+
+          {/* Show user icon only when authenticated */}
+          {isAuthenticated && (
+            <Link
+              to="/profile"
+              className={`nav-item user-icon ${
+                isActive("/profile") ? "nav-item-active" : ""
+              }`}
+            >
+              <SquareUser size={28} strokeWidth={1.5} />
+            </Link>
+          )}
         </div>
+
+        {/* Conditionally show login/register buttons or profile info */}
         <div className="navbar-actions">
-          <button className="button button-login">Login</button>
+          {!isAuthenticated ? (
+            <>
+              <button
+                className="button button-login"
+                onClick={() => navigate("/register")}
+              >
+                Register
+              </button>
+              <button
+                className="button button-login"
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </button>
+            </>
+          ) : (
+            <div className="user-info">
+              {currentUser?.displayName && (
+                <span className="display-name">
+                  Hi, {currentUser.displayName.split(" ")[0]}
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
