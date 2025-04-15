@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import ImageSlider from "./ImageSlider";
 
 function ImageEditing() {
   const [prompt, setPrompt] = useState("");
@@ -193,16 +194,14 @@ function ImageEditing() {
         </div>
       )}
 
-      {/* Result Image Area */}
-      {imageUrl && !loading && (
-        <div className="result-area">
-          <div className="result-title">Generated Variation:</div>
-          <img
-            src={imageUrl}
-            alt="AI Generated Result"
-            className="result-image"
-          />
-        </div>
+      {/* Result Area - replaced with ImageSlider */}
+      {imageUrl && !loading && uploadedFiles.length > 0 && (
+        <ImageSlider
+          beforeImage={uploadedFiles[0].previewUrl}
+          afterImage={imageUrl}
+          alt="Before and after image comparison"
+          size={70} // 90% width of container
+        />
       )}
     </div>
   );

@@ -95,7 +95,7 @@ router.post("/", upload.single("image"), async (req, res) => {
       );
 
       // Path to the pre-existing mask file
-      const maskPath = path.join(__dirname, "../images/mask_transparent.png");
+      const maskPath = path.join(__dirname, "../images/test2/mask2.png");
 
       // Write original buffer to a temporary file
       fs.writeFileSync(originalTempPath, uploadedImage.buffer);
