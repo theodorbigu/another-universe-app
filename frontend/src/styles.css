@@ -98,7 +98,8 @@ body {
   font-weight: 500;
   font-size: 14px;
   transition: color 0.2s ease;
-  display: block;
+  display: flex;
+  align-items: center;
   position: relative;
 }
 .nav-item::after {
@@ -128,6 +129,12 @@ body {
   width: 100%;
   height: 1px;
   background-color: #b5332f;
+}
+.nav-item.user-icon::after {
+  display: none;
+}
+.nav-item.user-icon.nav-item-active::after {
+  display: none;
 }
 
 .main-content {
@@ -235,6 +242,14 @@ body {
   border: 1px solid #b5332f;
   color: #b5332f;
   background-color: transparent;
+}
+.button-login {
+  color: #b5332f;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+.button-login:hover {
+  border: 1px solid #b5332f;
 }
 .button-disabled {
   opacity: 0.6;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { CarFront } from "lucide-react";
+import { CarFront, SquareUser } from "lucide-react";
 
 function Navbar() {
   const location = useLocation();
@@ -82,9 +82,17 @@ function Navbar() {
           >
             Compare
           </Link>
+          <Link
+            to="/profile"
+            className={`nav-item user-icon ${
+              isActive("/profile") ? "nav-item-active" : ""
+            }`}
+          >
+            <SquareUser size={28} strokeWidth={1.5} />
+          </Link>
         </div>
         <div className="navbar-actions">
-          <button className="button button-outline">Login</button>
+          <button className="button button-login">Login</button>
         </div>
       </div>
     </div>
