@@ -29,8 +29,6 @@ function Creations() {
     fetchCreations();
   }, [page]);
 
-  console.log(creations);
-
   // Handle pagination
   const totalPages = Math.ceil(totalCount / limit);
 
@@ -104,7 +102,9 @@ function Creations() {
             <button
               onClick={handleNextPage}
               disabled={page >= totalPages}
-              className={`button ${page >= totalPages ? "button-disabled" : ""}`}
+              className={`button ${
+                page >= totalPages ? "button-disabled" : ""
+              }`}
             >
               Next
             </button>

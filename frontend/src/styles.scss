@@ -96,6 +96,7 @@ body {
   &-actions {
     display: flex;
     align-items: center;
+    gap: 8px;
   }
 
   &-right-container {
@@ -103,6 +104,17 @@ body {
     align-items: center;
     margin-left: auto;
     gap: 24px;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+
+    .display-name {
+      font-weight: 500;
+      color: $text-light;
+      margin-right: 8px;
+    }
   }
 }
 
@@ -288,10 +300,11 @@ body {
   &-login {
     color: $accent-red;
     background-color: transparent;
-    border: 1px solid transparent;
+    border: 1px solid $accent-red;
+    margin-left: 8px;
 
     &:hover {
-      border: 1px solid $accent-red;
+      background-color: rgba(181, 51, 47, 0.1);
     }
   }
 
