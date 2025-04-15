@@ -1,7 +1,7 @@
 import { CarFront } from "lucide-react";
 import ImageSlider from "./ImageSlider";
-import originalCar from "../assets/original_car.png";
-import editedCar from "../assets/edited_car.png";
+import originalCar from "../assets/original_car2.png";
+import editedCar from "../assets/edited_car2.png";
 import {
   Paintbrush,
   Gauge,
