@@ -5,6 +5,7 @@ import { saveCreation } from "../services/api";
 function ImageGeneration() {
   const [prompt, setPrompt] = useState("");
   const [imageUrl, setImageUrl] = useState(null);
+  const [permanentImageUrl, setPermanentImageUrl] = useState(null);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
@@ -18,6 +19,7 @@ function ImageGeneration() {
 
     setLoading(true);
     setImageUrl(null);
+    setPermanentImageUrl(null);
     setSaveSuccess(false);
 
     try {
@@ -33,6 +35,7 @@ function ImageGeneration() {
       );
 
       setImageUrl(response.data.imageUrl);
+      setPermanentImageUrl(response.data.permanentImageUrl);
       alert("Image generated successfully!");
     } catch (error) {
       console.error("API call failed:", error.response?.data || error.message);
@@ -49,7 +52,7 @@ function ImageGeneration() {
   };
 
   const handleSaveCreation = async () => {
-    if (!imageUrl || !prompt) {
+    if (!permanentImageUrl || !prompt) {
       alert("Both image and prompt are required to save to gallery.");
       return;
     }
@@ -58,7 +61,7 @@ function ImageGeneration() {
     setSaveSuccess(false);
 
     try {
-      await saveCreation(prompt, imageUrl);
+      await saveCreation(prompt, permanentImageUrl);
       setSaveSuccess(true);
       alert("Creation saved to gallery successfully!");
     } catch (error) {
@@ -125,9 +128,9 @@ function ImageGeneration() {
             style={{
               marginTop: "16px",
             }}
-            className={`button ${saveSuccess ? "button-success" : "button-primary"} ${
-              loading ? "button-disabled" : ""
-            }`}
+            className={`button ${
+              saveSuccess ? "button-success" : "button-primary"
+            } ${loading ? "button-disabled" : ""}`}
             onClick={handleSaveCreation}
             disabled={saving}
           >

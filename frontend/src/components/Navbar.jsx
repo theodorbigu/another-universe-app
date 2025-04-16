@@ -21,7 +21,6 @@ function Navbar() {
 
     const handleScroll = (event) => {
       const scrollTop = event.target.scrollTop;
-      console.log("Container ScrollTop:", scrollTop);
       if (scrollTop > 0) {
         setShowBorder(true);
       } else {

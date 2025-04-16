@@ -2,14 +2,17 @@
 const express = require("express");
 const router = express.Router();
 const supabase = require("../supabaseClient");
+const { verifyToken } = require("../middleware/auth");
 
 /**
  * POST /creations
  * Add a new creation to the database
+ * Protected - requires authentication
  */
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   try {
     const { textprompt, image } = req.body;
+    const userId = req.user.uid;
 
     // Validate request body
     if (!textprompt || !image) {
@@ -19,10 +22,10 @@ router.post("/", async (req, res) => {
       });
     }
 
-    // Insert the creation into the database
+    // Insert the creation into the database with user_id
     const { data, error } = await supabase
       .from("creation")
-      .insert([{ textprompt, image }])
+      .insert([{ textprompt, image, user_id: userId }])
       .select();
 
     if (error) {
@@ -48,19 +51,23 @@ router.post("/", async (req, res) => {
 
 /**
  * GET /creations
- * Get all creations from the database
+ * Get all creations from the database for the authenticated user
+ * Protected - requires authentication
  */
-router.get("/", async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
   try {
+    const userId = req.user.uid;
+
     // Optional query parameters for pagination
     const { page = 1, limit = 10 } = req.query;
     const from = (page - 1) * limit;
     const to = from + limit - 1;
 
-    // Query the database
+    // Query the database for user's own creations
     const { data, error, count } = await supabase
       .from("creation")
       .select("*", { count: "exact" })
+      .eq("user_id", userId) // Filter by user ID
       .order("created_at", { ascending: false })
       .range(from, to);
 
@@ -90,23 +97,26 @@ router.get("/", async (req, res) => {
 /**
  * GET /creations/:id
  * Get a specific creation by ID
+ * Protected - requires authentication and ownership
  */
-router.get("/:id", async (req, res) => {
+router.get("/:id", verifyToken, async (req, res) => {
   try {
     const { id } = req.params;
+    const userId = req.user.uid;
 
-    // Query the database
+    // Query the database and check ownership
     const { data, error } = await supabase
       .from("creation")
       .select("*")
       .eq("id", id)
+      .eq("user_id", userId) // Ensure user owns this creation
       .single();
 
     if (error) {
       // Handle not found separately
       if (error.code === "PGRST116") {
         return res.status(404).json({
-          error: "Creation not found",
+          error: "Creation not found or you don't have permission to access it",
         });
       }
 
