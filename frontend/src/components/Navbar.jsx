@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { CarFront, SquareUser } from "lucide-react";
+import { CarFront, SquareUser, CreditCard } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import CreditsDisplay from "./CreditsDisplay";
 
@@ -86,6 +86,19 @@ function Navbar() {
             Compare
           </Link>
 
+          {/* Add credits link for authenticated users */}
+          {isAuthenticated && (
+            <Link
+              to="/credits"
+              className={`nav-item ${
+                isActive("/credits") ? "nav-item-active" : ""
+              }`}
+            >
+              <CreditCard size={18} strokeWidth={1.5} className="nav-icon" />
+              <span>Buy Credits</span>
+            </Link>
+          )}
+
           {/* Show user icon only when authenticated */}
           {isAuthenticated && (
             <Link
@@ -118,7 +131,12 @@ function Navbar() {
             </>
           ) : (
             <div className="user-info">
-              <CreditsDisplay />
+              <div
+                className="credits-display-container"
+                onClick={() => navigate("/credits")}
+              >
+                <CreditsDisplay />
+              </div>
             </div>
           )}
         </div>

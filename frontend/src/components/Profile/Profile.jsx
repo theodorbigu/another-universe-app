@@ -3,6 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { logout } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { CreditCard } from "lucide-react";
 
 const Profile = () => {
   const { currentUser, token } = useAuth();
@@ -192,6 +193,19 @@ const Profile = () => {
             )}
           </div>
         )}
+
+        {/* Add button to navigate to credits page */}
+        <div className="profile-credits-cta">
+          <h3>Need more credits?</h3>
+          <p>Purchase additional credits to continue creating amazing images</p>
+          <button
+            className="buy-credits-button"
+            onClick={() => navigate("/credits")}
+          >
+            <CreditCard size={18} strokeWidth={1.5} />
+            <span>Buy Credits</span>
+          </button>
+        </div>
 
         {renderCreditHistory()}
       </div>

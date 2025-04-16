@@ -10,6 +10,8 @@ import Register from "./components/Register/Register";
 import { AuthProvider } from "./context/AuthContext";
 import Profile from "./components/Profile/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
+import PaymentSuccess from "./components/Payment/PaymentSuccess";
+import CreditsPage from "./components/Credits/CreditsPage";
 
 function App() {
   return (
@@ -50,6 +52,22 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="payment-success"
+              element={
+                <ProtectedRoute>
+                  <PaymentSuccess />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="credits"
+              element={
+                <ProtectedRoute>
+                  <CreditsPage />
                 </ProtectedRoute>
               }
             />
