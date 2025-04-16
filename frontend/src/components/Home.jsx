@@ -1,7 +1,7 @@
 import { CarFront } from "lucide-react";
 import ImageSlider from "./ImageSlider";
-import originalCar from "../assets/original_car2.png";
-import editedCar from "../assets/edited_car2.png";
+import originalCar from "../assets/original_car3.png";
+import editedCar from "../assets/edited_car3.png";
 import {
   Paintbrush,
   Gauge,
@@ -33,7 +33,7 @@ function Home() {
             beforeImage={originalCar}
             afterImage={editedCar}
             alt="Car tuning comparison"
-            size={100}
+            size={130}
           />
         </div>
       </div>
