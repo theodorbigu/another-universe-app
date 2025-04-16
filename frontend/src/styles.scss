@@ -901,3 +901,109 @@ body {
     }
   }
 }
+
+.credits-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  background-color: #333;
+  border-radius: 8px;
+  border: 1px solid #444;
+}
+
+.credits-display {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #f5f5f5;
+}
+
+.credits-icon {
+  margin-right: 0.5rem;
+  font-size: 1.4rem;
+}
+
+.credits-amount {
+  color: #b5332f;
+}
+
+.credit-notice {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+/* Add these styles for the credit history table */
+
+.credit-history {
+  margin-top: 2rem;
+  background-color: #222;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid #444;
+}
+
+.credit-history h3 {
+  color: #f5f5f5;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-bottom: 1px solid #444;
+  padding-bottom: 0.5rem;
+}
+
+.credit-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.credit-table th,
+.credit-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+.credit-table th {
+  color: #aaa;
+  font-weight: 500;
+}
+
+.credit-table td {
+  color: #f5f5f5;
+}
+
+.credit-positive {
+  color: #34d399 !important;
+}
+
+.credit-negative {
+  color: #f87171 !important;
+}
+
+.credit-table tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Add this to ensure credits display looks good in navbar */
+.navbar .user-info .credits-display {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 16px;
+  border: 1px solid #444;
+}
+
+.navbar .user-info .credits-icon {
+  font-size: 1rem;
+}
+
+.navbar .user-info .credits-amount {
+  font-weight: 600;
+  font-size: 1rem;
+}

@@ -117,4 +117,129 @@ router.get("/profile", verifyToken, async (req, res) => {
   }
 });
 
+/**
+ * GET /credits
+ * Get user's current credit balance
+ */
+router.get("/credits", verifyToken, async (req, res) => {
+  try {
+    const userId = req.user.uid;
+
+    const { data, error } = await supabase
+      .from("users")
+      .select("credits")
+      .eq("uid", userId)
+      .single();
+
+    if (error) {
+      console.error("Error fetching credits:", error);
+      return res.status(500).json({ error: "Failed to fetch credit balance" });
+    }
+
+    return res.status(200).json({ credits: data.credits });
+  } catch (err) {
+    console.error("Server error:", err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+/**
+ * POST /credits/use
+ * Deduct credits from user balance
+ */
+router.post("/credits/use", verifyToken, async (req, res) => {
+  try {
+    const userId = req.user.uid;
+    const { amount, description } = req.body;
+
+    if (!amount || amount <= 0) {
+      return res.status(400).json({ error: "Invalid credit amount" });
+    }
+
+    // Start a Supabase transaction
+    const { data: userData, error: userError } = await supabase
+      .from("users")
+      .select("credits")
+      .eq("uid", userId)
+      .single();
+
+    if (userError) {
+      console.error("Error fetching user:", userError);
+      return res.status(500).json({ error: "Failed to check credit balance" });
+    }
+
+    // Check if user has enough credits
+    if (userData.credits < amount) {
+      return res.status(403).json({
+        error: "Insufficient credits",
+        credits: userData.credits,
+        required: amount,
+      });
+    }
+
+    // Update the user's credit balance
+    const { error: updateError } = await supabase
+      .from("users")
+      .update({ credits: userData.credits - amount })
+      .eq("uid", userId);
+
+    if (updateError) {
+      console.error("Error updating credits:", updateError);
+      return res.status(500).json({ error: "Failed to update credit balance" });
+    }
+
+    // Log the transaction
+    const { error: logError } = await supabase
+      .from("credit_transactions")
+      .insert({
+        user_id: userId,
+        amount: -amount,
+        action_type: "USE",
+        description: description || "Image edit",
+      });
+
+    if (logError) {
+      console.error("Error logging transaction:", logError);
+      // Continue anyway since the credit deduction was successful
+    }
+
+    return res.status(200).json({
+      success: true,
+      creditsRemaining: userData.credits - amount,
+    });
+  } catch (err) {
+    console.error("Server error:", err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+/**
+ * GET /credits/history
+ * Get user's credit transaction history
+ */
+router.get("/credits/history", verifyToken, async (req, res) => {
+  try {
+    const userId = req.user.uid;
+
+    const { data, error, count } = await supabase
+      .from("credit_transactions")
+      .select("*", { count: "exact" })
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Error fetching credit history:", error);
+      return res.status(500).json({ error: "Failed to fetch credit history" });
+    }
+
+    return res.status(200).json({
+      transactions: data,
+      count,
+    });
+  } catch (err) {
+    console.error("Server error:", err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = router;

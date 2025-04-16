@@ -1,12 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import ImageSlider from "./ImageSlider";
+import { useAuth } from "../context/AuthContext";
 
 function ImageEditing() {
+  const { token } = useAuth();
   const [prompt, setPrompt] = useState("");
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [credits, setCredits] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  // Fetch user's credits
+  useEffect(() => {
+    const fetchCredits = async () => {
+      try {
+        const response = await axios.get("http://localhost:5001/api/credits", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setCredits(response.data.credits);
+      } catch (err) {
+        console.error("Failed to fetch credits:", err);
+      }
+    };
+
+    if (token) {
+      fetchCredits();
+    }
+  }, [token]);
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
@@ -49,8 +73,17 @@ function ImageEditing() {
       return;
     }
 
+    // Credit check
+    if (credits !== null && credits < 1) {
+      alert(
+        "You don't have enough credits to edit images. Please purchase more credits."
+      );
+      return;
+    }
+
     setLoading(true);
     setImageUrl(null);
+    setErrorMessage(null);
 
     try {
       // Send request to edit-image endpoint using FormData
@@ -64,9 +97,13 @@ function ImageEditing() {
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
+
+      // Update credits after successful edit
+      setCredits((prev) => prev - 1);
 
       setImageUrl(response.data.imageUrl);
       alert("Image variation created successfully!");
@@ -74,11 +111,23 @@ function ImageEditing() {
       console.error("API call failed:", error.response?.data || error.message);
 
       const details = error.response?.data?.details || "";
-      alert(
-        `Image editing failed: ${error.response?.data?.error || error.message}${
-          details ? ` - ${details}` : ""
-        }`
-      );
+
+      // Special handling for credit-related errors
+      if (
+        error.response?.status === 403 &&
+        error.response?.data?.error === "Insufficient credits"
+      ) {
+        setCredits(error.response.data.credits); // Update credits display with server value
+        setErrorMessage(
+          `You need ${error.response.data.required} credits to edit images, but you only have ${error.response.data.credits} credits.`
+        );
+      } else {
+        setErrorMessage(
+          `Image editing failed: ${
+            error.response?.data?.error || error.message
+          }${details ? ` - ${details}` : ""}`
+        );
+      }
     }
 
     setLoading(false);
@@ -87,6 +136,9 @@ function ImageEditing() {
   return (
     <div className="page-container">
       <h1 className="sub-heading">Image Editing with DALL-E 2</h1>
+
+      {/* Error message */}
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
 
       {/* Prompt Input */}
       <div className="form-group">
