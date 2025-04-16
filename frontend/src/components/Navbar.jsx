@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CarFront, SquareUser } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import CreditsDisplay from "./CreditsDisplay";
 
 function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { currentUser, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const isActive = (path) => location.pathname === path;
   const isHomeActive = location.pathname === "/";
   const [showBorder, setShowBorder] = useState(false);
@@ -98,7 +99,7 @@ function Navbar() {
           )}
         </div>
 
-        {/* Conditionally show login/register buttons or profile info */}
+        {/* Conditionally show login/register buttons or credit display */}
         <div className="navbar-actions">
           {!isAuthenticated ? (
             <>
@@ -117,11 +118,7 @@ function Navbar() {
             </>
           ) : (
             <div className="user-info">
-              {currentUser?.displayName && (
-                <span className="display-name">
-                  Hi, {currentUser.displayName.split(" ")[0]}
-                </span>
-              )}
+              <CreditsDisplay />
             </div>
           )}
         </div>
