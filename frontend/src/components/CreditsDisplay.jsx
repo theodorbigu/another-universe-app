@@ -21,7 +21,8 @@ function CreditsDisplay() {
         setError(null);
       } catch (err) {
         console.error("Failed to fetch credits:", err);
-        setError("Failed to load credits");
+        setCredits(0);
+        setError(null);
       } finally {
         setLoading(false);
       }
@@ -33,7 +34,6 @@ function CreditsDisplay() {
   }, [token]);
 
   if (loading) return <span>Loading credits...</span>;
-  if (error) return <span>{error}</span>;
 
   return (
     <div className="credits-display">
