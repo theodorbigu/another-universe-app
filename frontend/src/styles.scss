@@ -1,6 +1,9 @@
 @import "./components/Login/_login.scss";
 @import "./components/Register/_register.scss";
 @import "./components/Profile/_profile.scss";
+@import "./components/Credits/_CreditsPage.scss";
+@import "./components/Payment/_PaymentSuccess.scss";
+@import "./components/CreditPurchase/_CreditPurchase.scss";
 @import "./variables.scss";
 
 // Reset margin and padding on html and body
@@ -130,6 +133,10 @@ body {
   display: flex;
   align-items: center;
   position: relative;
+
+  .nav-icon {
+    margin-right: 6px;
+  }
 
   &::after {
     content: "";
@@ -989,7 +996,20 @@ body {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Add this to ensure credits display looks good in navbar */
+// Credits display in navbar
+.credits-display-container {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+
+    .credits-display {
+      border-color: $accent-red;
+    }
+  }
+}
+
 .navbar .user-info .credits-display {
   font-size: 1rem;
   display: flex;
@@ -997,6 +1017,7 @@ body {
   padding: 6px 12px;
   border-radius: 16px;
   border: 1px solid #444;
+  transition: border-color 0.2s ease;
 }
 
 .navbar .user-info .credits-icon {
