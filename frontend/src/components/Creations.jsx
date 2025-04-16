@@ -8,12 +8,14 @@ function Creations() {
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const limit = 9; // Number of items per page
+  const [brokenImages, setBrokenImages] = useState({}); // Track broken images
 
   // Fetch creations when component mounts or page changes
   useEffect(() => {
     const fetchCreations = async () => {
       try {
         setLoading(true);
+        setBrokenImages({}); // Reset broken images tracking on page change
         const data = await getCreations(page, limit);
         setCreations(data.creations);
         setTotalCount(data.count);
@@ -28,6 +30,17 @@ function Creations() {
 
     fetchCreations();
   }, [page]);
+
+  // Handle image load errors
+  const handleImageError = (id) => {
+    setBrokenImages((prev) => ({
+      ...prev,
+      [id]: true,
+    }));
+    console.error(`Image with ID ${id} failed to load`);
+  };
+
+  console.log("creations", creations);
 
   // Handle pagination
   const totalPages = Math.ceil(totalCount / limit);
@@ -72,11 +85,19 @@ function Creations() {
           <div className="gallery-grid">
             {creations.map((creation) => (
               <div key={creation.id} className="gallery-item">
-                <img
-                  src={creation.image}
-                  alt={creation.textprompt}
-                  className="gallery-image"
-                />
+                {brokenImages[creation.id] ? (
+                  <div className="broken-image-placeholder">
+                    <p>Image not available</p>
+                    <p className="small-text">The image URL may have expired</p>
+                  </div>
+                ) : (
+                  <img
+                    src={creation.image}
+                    alt={creation.textprompt}
+                    className="gallery-image"
+                    onError={() => handleImageError(creation.id)}
+                  />
+                )}
                 <div className="gallery-caption">
                   <p className="gallery-prompt">{creation.textprompt}</p>
                   <p className="gallery-date">
