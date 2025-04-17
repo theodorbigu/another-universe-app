@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
-import Home from "./components/Home";
-import ImageGeneration from "./components/ImageGeneration";
-import ImageEditing from "./components/ImageEditing";
-import Creations from "./components/Creations";
-import SliderPage from "./components/SliderPage";
+import Layout from "./components/Layout/Layout";
+import Home from "./components/Home/Home";
+import ImageGeneration from "./components/ImageGeneration/ImageGeneration";
+import ImageEditing from "./components/ImageEditing/ImageEditing";
+import Creations from "./components/Creations/Creations";
+import SliderPage from "./components/SliderPage/SliderPage";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import { AuthProvider } from "./context/AuthContext";
 import Profile from "./components/Profile/Profile";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import PaymentSuccess from "./components/Payment/PaymentSuccess";
 import CreditsPage from "./components/Credits/CreditsPage";
 

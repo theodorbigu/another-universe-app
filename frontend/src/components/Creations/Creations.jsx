@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getCreations } from "../services/api";
+import { getCreations } from "../../services/api";
 
 function Creations() {
   const [creations, setCreations] = useState([]);
