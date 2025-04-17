@@ -1,0 +1,141 @@
+@import "../../variables";
+
+.footer {
+  background-color: darken($main-bg, 3%);
+  color: $text-light;
+  padding: 3rem 0 1.5rem;
+  border-top: 1px solid $border-color;
+  margin-top: auto;
+  width: 100%;
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 3rem;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
+
+  .footer-brand {
+    flex: 1;
+    min-width: 250px;
+    max-width: 350px;
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: $text-light;
+      text-decoration: none;
+      margin-bottom: 1rem;
+
+      svg {
+        color: $accent-red;
+      }
+    }
+
+    .footer-tagline {
+      color: darken($text-light, 20%);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+
+    @media (max-width: 560px) {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .footer-links-group {
+      min-width: 140px;
+
+      h4 {
+        color: $accent-red;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          margin-bottom: 0.75rem;
+
+          a,
+          button {
+            color: darken($text-light, 15%);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            display: inline-block;
+
+            &:hover {
+              color: $text-light;
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+
+  .footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: $text-light;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: $accent-red;
+        transform: translateY(-3px);
+      }
+    }
+  }
+
+  .footer-bottom {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    p {
+      color: darken($text-light, 30%);
+      font-size: 0.85rem;
+    }
+  }
+}

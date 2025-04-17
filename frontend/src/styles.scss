@@ -15,6 +15,7 @@
 @import "./components/ProtectedRoute/_ProtectedRoute.scss";
 @import "./components/SliderPage/_SliderPage.scss";
 @import "./components/Layout/_Layout.scss";
+@import "./components/Footer/_Footer.scss";
 @import "./components/Common/_Forms.scss";
 @import "./components/Common/_UI.scss";
 @import "./variables.scss";
@@ -26,6 +27,13 @@ body {
   padding: 0;
   overflow-x: hidden;
   background-color: $main-bg;
+  height: 100%;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 :root {
@@ -42,8 +50,9 @@ body {
     sans-serif;
   color: $text-light;
   line-height: 1.5;
+  display: flex;
+  flex-direction: column;
 }
-
 
 // Media queries
 @media (max-width: 768px) {
