@@ -1,0 +1,93 @@
+// Image slider
+.slider-container {
+  padding: 10px;
+}
+
+// Add styles for image comparison slider from styles.css
+.image-slider {
+  &-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background-color: #222;
+  }
+
+  &-image-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    &.after {
+      z-index: 1;
+    }
+
+    &.before {
+      z-index: 2;
+    }
+  }
+
+  &-divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #333333;
+    z-index: 3;
+  }
+
+  &-handle {
+    position: absolute;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgb(51, 51, 51);
+    border: none;
+    z-index: 4;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+
+    &:hover {
+      transform: translate(-50%, -50%) scale(1.1);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5), 0 0 8px rgba(51, 51, 51, 0.5);
+    }
+
+    &.dragging {
+      transform: translate(-50%, -50%) scale(1.15);
+      box-shadow: 0 4px 8px rgba(51, 51, 51, 0.7),
+        0 0 12px rgba(51, 51, 51, 0.7);
+      cursor: ew-resize;
+    }
+  }
+
+  &-handle-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: space-between;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+
+    &.active {
+      opacity: 1;
+    }
+  }
+
+  &-range {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    opacity: 0;
+    z-index: 5;
+    cursor: pointer;
+    height: 40px;
+  }
+}

@@ -1,0 +1,149 @@
+// Form elements
+.input {
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: $input-bg;
+  color: $text-light;
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+
+.button {
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &-primary {
+    background-color: $accent-red;
+    color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  &-outline {
+    border: 1px solid $accent-red;
+    color: $accent-red;
+    background-color: transparent;
+  }
+
+  &-login {
+    color: $accent-red;
+    background-color: transparent;
+    border: 1px solid $accent-red;
+    margin-left: 8px;
+
+    &:hover {
+      background-color: rgba(181, 51, 47, 0.1);
+    }
+  }
+
+  &-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &-success {
+    background-color: $success-green;
+    color: white;
+  }
+
+  &-secondary {
+    background-color: $secondary-blue;
+    color: white;
+  }
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: $text-light;
+}
+
+.textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  min-height: 100px;
+  resize: vertical;
+  font-family: inherit;
+  background-color: $input-bg;
+  color: $text-light;
+}
+
+// File upload
+.file-upload {
+  border: 2px dashed #555;
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  color: $text-light;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: $dark-card-bg;
+
+  &-hover {
+    border-color: $accent-red;
+    background-color: rgba(252, 8, 0, 0.1);
+    color: $accent-red;
+  }
+}
+
+// Radio components
+.radio {
+  &-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 16px;
+    border: 1px solid #555;
+    border-radius: 8px;
+    background-color: $dark-card-bg;
+  }
+
+  &-option {
+    padding: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: flex-start;
+
+    &-selected {
+      background-color: $accent-red;
+      color: white;
+    }
+
+    &-unselected {
+      background-color: #333;
+      border: 1px solid #555;
+    }
+  }
+
+  &-label {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &-description {
+    margin-top: 8px;
+    font-size: 0.9rem;
+  }
+}

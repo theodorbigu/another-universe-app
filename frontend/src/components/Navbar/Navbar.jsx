@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CarFront, SquareUser, CreditCard } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
-import CreditsDisplay from "./CreditsDisplay";
+import { useAuth } from "../../context/AuthContext";
+import CreditsDisplay from "../CreditsDisplay/CreditsDisplay";
 
 function Navbar() {
   const location = useLocation();

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { saveCreation } from "../services/api";
+import { saveCreation } from "../../services/api";
 
 function ImageGeneration() {
   const [prompt, setPrompt] = useState("");

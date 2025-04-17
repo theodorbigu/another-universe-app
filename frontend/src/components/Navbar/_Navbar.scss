@@ -1,0 +1,183 @@
+// Navbar styles
+.navbar {
+  background-color: var(--main-bg);
+  color: #fff;
+  padding: 8px 10%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: auto;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  transition: border-bottom 0.6s ease;
+  border-bottom: 1px solid transparent;
+
+  &-scrolled {
+    border-bottom: 1px solid black;
+    transition: border-bottom 0.2s ease;
+  }
+
+  &-header {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin-right: 0;
+  }
+
+  &-logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 12px;
+    object-fit: contain;
+
+    &-link {
+      &-active {
+        color: $accent-red;
+      }
+    }
+  }
+
+  &-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $accent-red;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  &-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &-right-container {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    gap: 24px;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+
+    .display-name {
+      font-weight: 500;
+      color: $text-light;
+      margin-right: 8px;
+    }
+  }
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nav-item {
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: $text-light;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .nav-icon {
+    margin-right: 6px;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: $accent-red;
+    transition: width 0.3s ease;
+  }
+
+  &:hover {
+    color: var(--accent-red);
+
+    &::after {
+      width: 100%;
+    }
+  }
+
+  &-active {
+    // font-weight: 600;
+    color: $accent-red;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: $accent-red;
+    }
+  }
+
+  // Remove underline from user icon
+  &.user-icon {
+    &::after {
+      display: none;
+    }
+
+    &.nav-item-active::after {
+      display: none;
+    }
+  }
+}
+
+// Credits display in navbar
+.credits-display-container {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+
+    .credits-display {
+      border-color: $accent-red;
+    }
+  }
+}
+
+.navbar .user-info .credits-display {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 16px;
+  border: 1px solid #444;
+  transition: border-color 0.2s ease;
+}
+
+.navbar .user-info .credits-icon {
+  font-size: 1rem;
+}
+
+.navbar .user-info .credits-amount {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+// Media queries
+@media (max-width: 768px) {
+  .navbar {
+    padding: 8px 5%;
+  }
+}

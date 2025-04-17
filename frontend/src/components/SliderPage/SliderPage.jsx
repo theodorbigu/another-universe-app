@@ -1,6 +1,6 @@
-import ImageSlider from "./ImageSlider";
-import originalCar from "../assets/original_car.png";
-import editedCar from "../assets/edited_car.png";
+import ImageSlider from "../ImageSlider/ImageSlider";
+import originalCar from "../../assets/original_car.png";
+import editedCar from "../../assets/edited_car.png";
 
 function SliderPage() {
   return (
